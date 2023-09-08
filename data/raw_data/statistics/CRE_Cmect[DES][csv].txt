@@ -1,0 +1,26 @@
+Sgnyea [Year Sign] - 
+AreaID [Area Code] - 
+Ctnm_en [County Name] - 
+Ctnm_id [County Sign] - 
+Prvcnm_id [Province Sign] - 
+CityName_id [City Sign] - 
+CityName [City Name] - 
+Prvcnm_en [Name Of Province] - 
+Cmect01 [Land Area] - 
+Cmect02 [Total Population (Year-End)] - 
+Cmect03 [GRDP] - 
+Cmect04 [GRDP - Primary Industry] - 
+Cmect05 [GRDP - Secondary Industry] - 
+Cmect06 [GRDP - Tertiary Industry] - 
+Cmect07 [GRDP per Capita] - 
+Cmect08 [Urban Employed Persons] - 
+Cmect09 [Rural Employed Persons] - 
+Cmect10 [Employed Persons in Farming, Forestry, Husbandry and Fishery] - 
+Cmect11 [Total Fixed Asset Investments] - 
+Cmect12 [Regional Fiscal Revenue] - 
+Cmect13 [Regional Fiscal Expenditure] - 
+Cmect14 [Net Income Of Rural Residents Per Capita] - 
+Cmect15 [Average Salary Of Urban Employees] - 
+Cmect16 [Cultivated Area In Common Use] - 
+Cmect17 [Gross Output Value in Farming, Forestry, Husbandry and Fishery] - 
+Cmect18 [Total Retails Of Consumer Goods] - 

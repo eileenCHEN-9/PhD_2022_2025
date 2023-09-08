@@ -1,0 +1,4 @@
+Sgnyea [Year Sign] - 
+Prvcnm_id [Province Code] - 
+Prvcnm_en [Name Of Province] - 
+Pi0101 [Consumer Price Index (Last Year = 100)] - Consumer Price Index reflects the trend and degree of changes in prices of consumer goods and services purchased by urban and rural residents, and is a composite index derived from the urban consumer price index and the rural consumer price index. Consumer price index can be used to observe and analyze the impact of retail and services price change of consumer goods on actual expenditure for living cost of urban and rural residents.
