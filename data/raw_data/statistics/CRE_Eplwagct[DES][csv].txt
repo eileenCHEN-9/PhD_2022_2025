@@ -1,0 +1,18 @@
+Sgnyea [Year Sign] - 
+Ctnm_en [Name Of City] - 
+Ctnm_id [City Code] - 
+Cttyp_en [City Classification] - 
+Prvcnm_id [Province Sign] - 
+Prvcnm_en [Name Of Province] - 
+Eect01 [Total Population (Year-End)] - 
+Eect02 [Total Non-Rural Population (Year-End)] - 
+Eect03 [Natural Growth Rate of Population] - 
+Eect04 [Population Density] - 
+Eect05 [Employed Persons] - 
+Eect06 [Urban Individual Worker] - 
+Eect08 [Proportion Of Employed Persons Of Primary Industry (%)] - 
+Eect09 [Proportion Of Employed Persons Of Secondary Industry (%)] - 
+Eect10 [Proportion Of Employed Persons Of Tertiary Industry (%)] - 
+Eect11 [Annual Average Number Of All Employees] - 
+Eect12 [Gross Wages Of All Employees] - 
+Eect13 [Average Wage Of Employees] - 
