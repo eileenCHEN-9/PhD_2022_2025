@@ -4,7 +4,12 @@ Ctnm_id [City Code] -
 Cttyp_en [City Classification] - 
 Prvcnm_id [Province Sign] - 
 Prvcnm_en [Name Of Province] - 
-Gdpct01 [Gdp] - 
+Gdpct01 [Gdp] - (unit: 100 million)
 Gdpct02 [Ratio Of Primary Industry To Gdp (%)] - Primary industry refers to farming industry, including planting, forestry, animal husbandry and fishery.
 Gdpct03 [Ratio Of Secondary Industry To Gdp (%)] - Secondary industry refers to industry and construction industry.
 Gdpct04 [Ratio Of Tertiary Industry To Gdp (%)] - Tertiary industry refers to all other industries not included in primary or secondary industry.
+GDP_PerCapita [Regional GDP per Capita] - (unit: CNY)
+GDPYoY [Year-on-Year Regional GDP] - 
+GDP_PrimInd [GDP of the Primary Industry] - (unit: 10000)
+GDP_SecInd [GDP of the Secondary Industry] - (unit: 10000)
+GDP_TerInd [GDP of the Tertiary Industry] - (unit: 10000)

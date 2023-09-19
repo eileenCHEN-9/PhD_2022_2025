@@ -1,0 +1,172 @@
+---
+title: "c01-data_cleaning"
+author: "Yilin"
+format: html
+editor: visual
+---
+
+# From nominal GDP to real GDP
+
+### Load libraries
+
+```{r}
+#install.packages("tidyverse")
+#install.packages("skimr")
+#install.packages("dlookr")
+#install.packages("usethis")
+
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(skimr)
+library(readr)
+library(dlookr)
+library(missRanger)
+```
+
+### Load datasets
+
+```{r}
+#Nominal county-level GDP
+county_ngdp <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Cmect.csv")
+skim(county_ngdp)
+```
+
+```{r}
+#Nominal city-level GDP
+city_ngdp <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Gdpct.csv")
+skim(city_ngdp)
+```
+
+```{r}
+#city population
+city_pop <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Eplwagct.csv")
+skim(city_pop)
+```
+
+
+```{r}
+#provincial CPI
+cpi <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Pi01.csv")
+cpi
+```
+
+## Filter data from 2000-2021
+
+```{r}
+#Nominal county-level GDP
+county_ngdp <- county_ngdp %>%
+filter(between(Sgnyea, 2000, 2020))
+skim(county_ngdp)
+```
+
+```{r}
+#Nominal city-level GDP
+city_ngdp <- city_ngdp %>%
+filter(between(Sgnyea, 2000, 2020))
+skim(city_ngdp)
+```
+
+```{r}
+#Select CPI data 1999-2020
+cpi <- cpi %>%
+  group_by(Prvcnm_id) %>%
+  filter(between(Sgnyea, 1999, 2020))
+cpi
+```
+
+## Transform CPI data (from last year==100 into 2010 as the base year)
+
+```{r}
+#long to wide
+#cpi_wide <- cpi %>%
+#pivot_wider(id_cols = c(Prvcnm_id,Prvcnm_en),names_from = Sgnyea, values_from = Pi0101, names_prefix = "cpi_")
+#skim(cpi_wide)
+```
+
+
+```{r}
+# Create a function to calculate the relative cpi
+calculate_relative_index <- function(data) {
+  # order the year
+  data <- data[order(data$Sgnyea), ]
+  
+  # set cpi in 1999 as 100
+  data[data$Sgnyea == 1999, "Pi0101"] <- 100
+  
+  # calculate relative cpi from 2000
+  for (i in 2000:max(data$Sgnyea)) {
+    if (i > max(data$Sgnyea)) break  #check if it reaches the max year
+    
+    #extract the current and previous cpi
+    current_cpi <- data[data$Sgnyea == i, "Pi0101"]
+    previous_cpi <- data[data$Sgnyea == i - 1, "Pi0101"]
+    
+    # extract cpi in 2010
+    cpi_2010 <- data[data$Sgnyea == 2010, "Pi0101"]
+    
+    if (i == 2000) {
+      # 在2000年，直接使用(cpi_2000 * cpi_1999) / 100作为新的CPI值
+      data[data$Sgnyea == 2000, "Pi0101"] <- (current_cpi * previous_cpi) / 100
+    } else {
+      # replace the cpi with the calculated ones
+      data[data$Sgnyea == i, "Pi0101"] <- (current_cpi * previous_cpi) / 100
+    }
+  }
+  
+  return(data)
+}
+
+# split-apply-combine，apply the function to the specific year and region
+cpi <- cpi %>%
+  group_by(Prvcnm_id) %>%
+  do(calculate_relative_index(.))
+cpi
+```
+
+
+```{r}
+# Calcuate cpi based on 2010 (from 2000)
+cpi_2010 <- cpi %>%
+  filter(Sgnyea >= 2000) %>%
+  group_by(Prvcnm_id) %>%
+  mutate(rel_cpi_2010 = (Pi0101 * 100) / max(Pi0101[Sgnyea == 2010]))
+cpi_2010
+```
+
+### Merge data
+```{r}
+city_rgdp <- left_join(city_ngdp, cpi_2010, by = c("Sgnyea", "Prvcnm_id"))
+
+#Calculate real city GDP 2000-2020 (base year: 2010)
+city_rgdp <- city_rgdp %>%
+  mutate(city_rgdp = Gdpct01/rel_cpi_2010*100) %>%
+  mutate(city_rgdppc = GDP_PerCapita/rel_cpi_2010*100)
+skim(city_rgdp)
+```
+
+```{r}
+county_rgdp <- left_join(county_ngdp, cpi_2010, by = c("Sgnyea", "Prvcnm_id"))
+
+#Calculate real county GDP 2000-2020 (base year: 2010)
+county_rgdp <- county_rgdp %>%
+  mutate(county_rgdp = Cmect03/rel_cpi_2010*100) %>%
+  mutate(county_rgdppc = Cmect07/rel_cpi_2010*100)
+skim(county_rgdp)
+```
+
+```{r}
+#write.csv(city_rgdp, file = "/cloud/project/data/city_rgdp.csv", row.names = FALSE)
+#write.csv(county_rgdp, file = "/cloud/project/data/county_rgdp.csv", row.names = FALSE)
+```
+
+
+
+
+
+
+
+
