@@ -23,17 +23,17 @@ summarize
 describe
 
 ** 2. Generate variables
-gen city_lggdp = log(city_rgdp)
-gen city_lggdppc = log(city_rgdppc)
-gen lg_nonagri = log(city_rgdp*(gdpct03 + gdpct04)/100)
-gen lg_agri = log(city_rgdp*gdpct02/100)
-gen lg_ind = log(city_rgdp*gdpct03/100)
-gen lg_ser = log(city_rgdp*gdpct04/100)
+gen city_lggdp = ln(city_rgdp)
+gen city_lggdppc = ln(city_rgdppc)
+gen lg_nonagri = ln(city_rgdp*(gdpct03 + gdpct04)/100)
+gen lg_agri = ln(city_rgdp*gdpct02/100)
+gen lg_ind = ln(city_rgdp*gdpct03/100)
+gen lg_ser = ln(city_rgdp*gdpct04/100)
 
-gen lg_totalsol = log(0.01 + total_sol)
-gen lg_urbansol = log(0.01 + urban_sol)
-gen lg_ruralsol = log(0.01 + agriculture_sol)
-gen lg_ruralnpp = log(0.01 + agriculture_anpp)
+gen lg_totalsol = ln(0.01 + total_sol)
+gen lg_urbansol = ln(0.01 + urban_sol)
+gen lg_ruralsol = ln(0.01 + agriculture_sol)
+gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
 
 ** 3. Label variables
 label variable ctnm_en "Name Of City"

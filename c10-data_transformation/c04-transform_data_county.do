@@ -26,16 +26,16 @@ summarize
 describe
 
 ** 3. Generate new columns
-gen county_lggdp = log(county_rgdp)
-gen county_lggdppc = log(county_rgdppc)
-gen lg_totalsol = log(0.01 + total_sol)
-gen lg_urbansol = log(0.01 + urban_sol)
-gen lg_ruralsol = log(0.01 + agriculture_sol)
-gen lg_ruralnpp = log(0.01 + agriculture_anpp)
-gen lg_nonagri = log((cmect05+cmect06)/rel_cpi_2010*100)
-gen lg_agri = log(cmect04/rel_cpi_2010*100)
-gen lg_ind = log(cmect05/rel_cpi_2010*100)
-gen lg_ser = log(cmect06/rel_cpi_2010*100)
+gen county_lggdp = ln(county_rgdp)
+gen county_lggdppc = ln(county_rgdppc)
+gen lg_totalsol = ln(0.01 + total_sol)
+gen lg_urbansol = ln(0.01 + urban_sol)
+gen lg_ruralsol = ln(0.01 + agriculture_sol)
+gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
+gen lg_nonagri = ln((cmect05+cmect06)/rel_cpi_2010*100)
+gen lg_agri = ln(cmect04/rel_cpi_2010*100)
+gen lg_ind = ln(cmect05/rel_cpi_2010*100)
+gen lg_ser = ln(cmect06/rel_cpi_2010*100)
 
 ** 4. Label variables
 label variable total_population "Total population (Landscan)"

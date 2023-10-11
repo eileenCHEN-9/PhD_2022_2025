@@ -22,7 +22,7 @@ version 17
 *** 2. Import county level dataset
 use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_longpanel.dta", clear
 
-gen lg101214 = log(0.01 + v22 + v24 + v26)
+gen lg101214 = ln(0.01 + v22 + v24 + v26)
 label variable lg101214 "Log (croplands)"
 
 summarize
@@ -105,7 +105,7 @@ xtreg lg_agri lg_ruralnpp i.year,fe robust
 predict y_predicted2, xb
 rename  y_predicted2 lg_agri_predicted
 
-gen lg_totalgdp_predicted= log(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
+gen lg_totalgdp_predicted= ln(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
 
 label variable lg_nonagri_predicted "Predicted non-agriculture GDP using NTL"
 label variable lg_agri_predicted "Predicted agriculture GDP using NPP"

@@ -1,6 +1,6 @@
 cls
 **==========================================
-** Program Name: Regression of satellite data (daytime & NTL) and sectoral GDP (county)
+** Program Name: Predicting sectoral GDP (county) using VIIRS-like NTL, MODIS landcover, and net primary productivity
 ** Author: Yilin Chen
 ** Date: 2023-09-30
 **------------------------------------------
@@ -22,7 +22,8 @@ version 17
 ** 2. Import county level dataset
 use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/county_longpanel.dta", clear
 
-gen lg101214 = log(0.01 + v26 + v28 + v30)
+*calculte the area of croplands
+gen lg101214 = ln(0.01 + v26 + v28 + v30)
 label variable lg101214 "Log (croplands)"
 
 summarize
@@ -107,7 +108,7 @@ xtreg lg_agri lg_ruralnpp i.year,fe robust
 predict y_predicted2, xb
 rename  y_predicted2 lg_agri_predicted
 
-gen lg_totalgdp_predicted= log(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
+gen lg_totalgdp_predicted= ln(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
 
 label variable lg_nonagri_predicted "Predicted non-agriculture GDP using NTL"
 label variable lg_agri_predicted "Predicted agriculture GDP using NPP"
