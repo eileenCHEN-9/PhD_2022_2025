@@ -10,6 +10,8 @@ cls
 
 * Data files created as intermediate product:
 *===========================================
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+
 ** 1. Setup
 clear all
 macro drop _all
@@ -17,7 +19,7 @@ capture log close
 set more off
 version 17
 
-import delimited using "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_longpanel.csv", clear
+import delimited using "city_longpanel.csv", clear
 
 summarize
 describe
@@ -61,7 +63,7 @@ label variable gdp_secind "Secondary industry GDP (nominal)"
 label variable gdp_terind "Tertiary industry GDP (nominal)"
 
 ** 4. Save dta file
-save "/Users/yilinchen/Documents/PhD/thesis/data/city_longpanel.dta"
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_longpanel.dta"
 
 
 

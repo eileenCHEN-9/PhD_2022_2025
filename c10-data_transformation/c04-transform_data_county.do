@@ -10,7 +10,7 @@ cls
 
 * Data files created as intermediate product:
 *===========================================
-cd "/Users/yilinchen/Documents/PhD/thesis/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 
 ** 1. Setup
 clear all
@@ -40,7 +40,7 @@ gen lg_ser = ln(cmect06/rel_cpi_2010*100)
 ** 4. Label variables
 label variable total_population "Total population (Landscan)"
 label variable ctnm_en "County Name"
-label variable prvcnm_enx "Province Name"
+label variable province "Province Name"
 label variable cmect01 "Land Area"
 label variable cmect02 "Total Population (Year-End)"
 label variable cmect03 "GRDP (nominal)"
@@ -76,7 +76,7 @@ label variable lg_ind "Log industry GDP (real)"
 label variable lg_ser "Log service GDP (real)"
 
 ** 5. Save dta file
-save "/Users/yilinchen/Documents/PhD/thesis/data/county_longpanel.dta"
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/county_longpanel.dta"
 
 
 
