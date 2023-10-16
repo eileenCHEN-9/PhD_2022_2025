@@ -1,0 +1,17 @@
+		(1)	(2)
+VARIABLES	LABELS	Log (agriculture GDP)	Log (agriculture GDP)
+			
+lg101214	Log (croplands)	-0.012	
+		(0.021)	
+lg_ruralnpp	Log NPP (net primary productivity) in rural		0.024*
+			(0.013)
+Constant	Constant	10.838***	10.623***
+		(0.125)	(0.074)
+			
+Observations		35,836	35,836
+R-squared		0.697	0.698
+Number of county_id		2,287	2,287
+Regional FE		Yes	Yes
+Year FE		Yes	Yes
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			

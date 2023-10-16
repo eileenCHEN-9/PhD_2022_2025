@@ -10,7 +10,7 @@ cls
 
 * Data files created as intermediate product:
 *===========================================
-*cd "/Users/yilinchen/Documents/PhD/thesis/data"
+*cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 
 *** 1. Setup
 clear all
@@ -22,7 +22,7 @@ version 17
 *** 2. Import county level dataset
 use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_longpanel.dta", clear
 
-gen lg101214 = ln(0.01 + v22 + v24 + v26)
+gen lg101214 = ln(0.01 + v18 + v20 + v22)
 label variable lg101214 "Log (croplands)"
 
 summarize
@@ -38,59 +38,59 @@ set matsize 11000
 ** 3.1 NTL and sectoral GDP
 *Pooled OLS
 reg city_lggdp lg_totalsol
-outreg2 using "tab02-1.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
+outreg2 using "../results/result1/tab02-1.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
 
 reg lg_nonagri lg_totalsol
-outreg2 using "tab02-1.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
+outreg2 using "../results/result1/tab02-1.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
 
 reg lg_ind lg_totalsol
-outreg2 using "tab02-1.tex", append keep(lg_totalsol) ctitle(Log (industry)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
+outreg2 using "../results/result1/tab02-1.tex", append keep(lg_totalsol) ctitle(Log (industry)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
 
 reg lg_ser lg_totalsol
-outreg2 using "tab02-1.tex", append keep(lg_totalsol) ctitle(Log (services)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
+outreg2 using "../results/result1/tab02-1.tex", append keep(lg_totalsol) ctitle(Log (services)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
 
 reg lg_agri lg_totalsol
-outreg2 using "tab02-1.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
+outreg2 using "../results/result1/tab02-1.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) addtext(Regional FE, NO, Year FE, NO) dec(3) label
 
 *Between estimator
 xtreg city_lggdp lg_totalsol,be
-outreg2 using "tab02-2.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) dec(3) label
+outreg2 using "../results/result1/tab02-2.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) dec(3) label
 
 xtreg lg_nonagri lg_totalsol,be
-outreg2 using "tab02-2.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) dec(3) label
+outreg2 using "../results/result1/tab02-2.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) dec(3) label
 
 xtreg lg_ind lg_totalsol,be
-outreg2 using "tab02-2.tex", append keep(lg_totalsol) ctitle(Log (industry)) dec(3) label
+outreg2 using "../results/result1/tab02-2.tex", append keep(lg_totalsol) ctitle(Log (industry)) dec(3) label
 
 xtreg lg_ser lg_totalsol,be
-outreg2 using "tab02-2.tex", append keep(lg_totalsol) ctitle(Log (services)) dec(3) label
+outreg2 using "../results/result1/tab02-2.tex", append keep(lg_totalsol) ctitle(Log (services)) dec(3) label
 
 xtreg lg_agri lg_totalsol,be
-outreg2 using "tab02-2.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) dec(3) label
+outreg2 using "../results/result1/tab02-2.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) dec(3) label
 
 *TWFE
 xtreg city_lggdp lg_totalsol i.year,fe robust
-outreg2 using "tab02-3.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-3.tex", replace keep(lg_totalsol) ctitle(Log (total GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg lg_nonagri lg_totalsol i.year,fe robust
-outreg2 using "tab02-3.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-3.tex", append keep(lg_totalsol) ctitle(Log (non-agriculture)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg lg_ind lg_totalsol i.year,fe robust
-outreg2 using "tab02-3.tex", append keep(lg_totalsol) ctitle(Log (industry)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-3.tex", append keep(lg_totalsol) ctitle(Log (industry)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg lg_ser lg_totalsol i.year,fe robust
-outreg2 using "tab02-3.tex", append keep(lg_totalsol) ctitle(Log (services)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-3.tex", append keep(lg_totalsol) ctitle(Log (services)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg lg_agri lg_totalsol i.year,fe robust
-outreg2 using "tab02-3.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-3.tex", append keep(lg_totalsol) ctitle(Log (agriculture)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 **3.2 landcover/NPP and sectoral GDP
 *TWFE-landcover area
 xtreg lg_agri lg101214 i.year,fe robust
-outreg2 using "tab02-4.tex", replace keep(lg101214 lg_ruralnpp) ctitle(Log (agriculture GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-4.tex", replace keep(lg101214 lg_ruralnpp) ctitle(Log (agriculture GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 *TWFE-NPP
 xtreg lg_agri lg_ruralnpp i.year,fe robust
-outreg2 using "tab02-4.tex", append keep(lg101214 lg_ruralnpp) ctitle(Log (agriculture GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result1/tab02-4.tex", append keep(lg101214 lg_ruralnpp) ctitle(Log (agriculture GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 *** 4. Predict GDP
 xtreg lg_nonagri lg_totalsol i.year,fe robust
@@ -115,7 +115,7 @@ summarize
 describe
 
 *** 5. Save dta file
-save "/Users/yilinchen/Documents/PhD/thesis/data/city_predicted.dta"
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_predicted.dta"
 
 
 

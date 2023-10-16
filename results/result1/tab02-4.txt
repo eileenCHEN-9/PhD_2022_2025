@@ -1,0 +1,17 @@
+		(1)	(2)
+VARIABLES	LABELS	Log (agriculture GDP)	Log (agriculture GDP)
+			
+lg101214	Log (croplands)	-0.137	
+		(0.084)	
+lg_ruralnpp	Log average NPP (net primary productivity) in the rural area		0.104*
+			(0.062)
+Constant	Constant	4.897***	3.155***
+		(0.697)	(0.368)
+			
+Observations		5,556	5,556
+R-squared		0.802	0.801
+Number of city_id		325	325
+Regional FE		Yes	Yes
+Year FE		Yes	Yes
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			
