@@ -11,7 +11,7 @@ cls
 * Data files created as final product:
 *===========================================
 
-cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025_1/data"
 
 ** 1. Setup
 clear all
@@ -21,7 +21,7 @@ set more off
 version 15
 
 ** 2. Import city level dataset
-use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_predicted.dta", clear
+use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_predicted_1.dta", clear
 
 summarize
 describe
@@ -39,8 +39,12 @@ gen agri_gdp=exp(lg_agri_predicted)/exp(lg_totalgdp_predicted)
 gen nonagri_gdp=exp(lg_nonagri_predicted)/exp(lg_totalgdp_predicted)
 
 label variable pred_gdppc_city "Predicted GDP per capita (city)"
-label variable agri_gdp "Share of agriculture production in total GDP (predicted)"
-label variable nonagri_gdp "Share of non-agriculture production in total GDP (predicted)"
+label variable agri_gdp "Ratio Of agriculture production To Gdp (%) (predicted)"
+label variable nonagri_gdp "Ratio Of non-agriculture production To Gdp (%) (predicted)"
+label variable Emp_ind "Ratio Of industry employment To total (%)"
+label variable Emp_ser "Ratio Of service employment To total (%)"
+label variable Emp_agri "Ratio Of agriculture employment To total (%)"
+label variable Emp_num "Employed Persons"
 
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/Main_Dataset.dta", replace
 
