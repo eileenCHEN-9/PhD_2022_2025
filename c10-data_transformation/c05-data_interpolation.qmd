@@ -1,0 +1,88 @@
+---
+title: "Interpolate employment data"
+author: "Yilin"
+format: html
+editor: visual
+---
+
+# Interpolate employment data
+
+### Load libraries
+```{r}
+library(dplyr)
+library(dlookr)
+library(missRanger)
+library(haven)
+```
+
+### Load datasets
+```{r}
+#city population
+city_pop <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Eplwagct.csv")
+city_pop <- city_pop %>%
+filter(between(Sgnyea, 2000, 2020))
+city_pop
+```
+
+
+```{r}
+#Change column names
+city_pop <- city_pop %>%
+  rename(year = Sgnyea, city_id = Ctnm_id, Emp_ind = Eect09, Emp_ser = Eect10, Emp_num = Eect05)
+skim(city_pop)
+```
+
+```{r}
+#visualising missing values
+city_pop %>%
+plot_na_pareto(only_na=TRUE)
+```
+
+```{r}
+new_citypop1 <- city_pop[, c("year", "city_id", "Emp_ind", "Emp_num")]
+skim(new_citypop1)
+```
+
+```{r}
+new_citypop2 <- city_pop[, c("year", "city_id", "Emp_ser")]
+skim(new_citypop2)
+```
+
+
+```{r}
+#Interpolate with decision tree
+new_citypop1 <- missRanger(new_citypop1, 
+                           formula = . ~ .,
+                           num.trees = 1000,
+                           verbose = 2,
+                           seed = 111,
+                           returnOOB = T)
+```
+
+```{r}
+new_citypop2 <- missRanger(new_citypop2, 
+                           formula = . ~ .,
+                           num.trees = 1000,
+                           verbose = 2,
+                           seed = 111,
+                           returnOOB = T)
+```
+
+```{r}
+#Merge dataset
+new_citypop <- inner_join(new_citypop1, new_citypop2, by = c("year", "city_id"))
+skim(new_citypop)
+```
+
+
+```{r}
+#Create new column of non-agriculture employment share
+new_citypop <- new_citypop %>%
+  mutate(Emp_agri=100-Emp_ind-Emp_ser) 
+skim(new_citypop)
+```
+
+```{r}
+write_dta(new_citypop, "/cloud/project/data/Employment.dta")
+```
+

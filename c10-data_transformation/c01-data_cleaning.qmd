@@ -14,7 +14,8 @@ editor: visual
 #install.packages("skimr")
 #install.packages("dlookr")
 #install.packages("usethis")
-
+#install.packages("devtools")
+#install.packages("usethis")
 ```
 
 ```{r}
@@ -44,7 +45,9 @@ skim(city_ngdp)
 ```{r}
 #city population
 city_pop <- read_csv("/cloud/project/data/raw_data/statistics/CRE_Eplwagct.csv")
-skim(city_pop)
+city_pop <- city_pop %>%
+filter(between(Sgnyea, 2000, 2020))
+city_pop
 ```
 
 
