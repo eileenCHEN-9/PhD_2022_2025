@@ -23,6 +23,10 @@ version 15
 ** 2. Import city level dataset
 use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_predicted_1.dta", clear
 
+*Drop Hongkong, Macau, Taiwan and Sansha city in South China Sea (no population)
+drop if province_id == 810000 | province_id == 820000 | province_id == 710000
+drop if city_id == 460300
+
 summarize
 describe
 
