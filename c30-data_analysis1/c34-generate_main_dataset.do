@@ -11,7 +11,7 @@ cls
 * Data files created as final product:
 *===========================================
 
-cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025_1/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 
 ** 1. Setup
 clear all
@@ -35,15 +35,18 @@ sort city_id year
 
 ** 4. Generate necessary variables
 gen pred_gdppc_city=exp(lg_totalgdp_predicted)/total_population*1000
-gen agri_gdp=exp(lg_agri_predicted)/exp(lg_totalgdp_predicted)
 gen nonagri_gdp=exp(lg_nonagri_predicted)/exp(lg_totalgdp_predicted)
+gen Emp_nonagri=100-Emp_agri
 
 label variable pred_gdppc_city "Predicted GDP per capita (city)"
 label variable agri_gdp "Ratio Of agriculture production To Gdp (%) (predicted)"
 label variable nonagri_gdp "Ratio Of non-agriculture production To Gdp (%) (predicted)"
+label variable ind_gdp "Ratio Of industry production To Gdp (%) (predicted)"
+label variable ser_gdp "Ratio Of service production To Gdp (%) (predicted)"
 label variable Emp_ind "Ratio Of industry employment To total (%)"
 label variable Emp_ser "Ratio Of service employment To total (%)"
 label variable Emp_agri "Ratio Of agriculture employment To total (%)"
+label variable Emp_nonagri "Ratio Of non-agriculture employment To total (%)"
 label variable Emp_num "Employed Persons"
 
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/Main_Dataset.dta", replace
