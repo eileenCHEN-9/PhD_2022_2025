@@ -28,14 +28,19 @@ describe
 ** 3. Generate new columns
 gen county_lggdp = ln(county_rgdp)
 gen county_lggdppc = ln(county_rgdppc)
-gen lg_totalsol = ln(0.01 + total_sol)
-gen lg_urbansol = ln(0.01 + urban_sol)
-gen lg_ruralsol = ln(0.01 + agriculture_sol)
-gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
 gen lg_nonagri = ln((cmect05+cmect06)/rel_cpi_2010*100)
 gen lg_agri = ln(cmect04/rel_cpi_2010*100)
 gen lg_ind = ln(cmect05/rel_cpi_2010*100)
 gen lg_ser = ln(cmect06/rel_cpi_2010*100)
+
+gen lg_totalsol = ln(0.01 + total_sol)
+gen lg_urbansol = ln(0.01 + urban_sol)
+gen lg_ruralsol = ln(0.01 + agriculture_sol)
+gen lg_totalmol = ln(0.01 + total_meanlight)
+gen lg_urbanmol = ln(0.01 + urban_meanlight)
+gen lg_ruralmol = ln(0.01 + agriculture_meanlight)
+gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
+
 
 ** 4. Label variables
 label variable total_population "Total population (Landscan)"
@@ -69,6 +74,9 @@ label variable county_lggdppc "Log real GDP per capita"
 label variable lg_totalsol "Log total sum of lights"
 label variable lg_urbansol "Log urban sum of lights"
 label variable lg_ruralsol "Log rural sum of lights"
+label variable lg_totalmol "Log total mean of lights"
+label variable lg_urbanmol "Log urban mean of lights"
+label variable lg_ruralmol "Log rural mean of lights"
 label variable lg_ruralnpp "Log NPP (net primary productivity) in rural"
 label variable lg_nonagri "Log non agriculture GDP (real)"
 label variable lg_agri "Log agriculture GDP (real)"
@@ -76,7 +84,7 @@ label variable lg_ind "Log industry GDP (real)"
 label variable lg_ser "Log service GDP (real)"
 
 ** 5. Save dta file
-save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/county_longpanel.dta"
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/county_longpanel.dta", replace
 
 
 

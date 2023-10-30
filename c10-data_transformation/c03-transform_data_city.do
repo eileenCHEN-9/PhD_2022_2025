@@ -35,6 +35,9 @@ gen lg_ser = ln(city_rgdp*gdpct04/100)
 gen lg_totalsol = ln(0.01 + total_sol)
 gen lg_urbansol = ln(0.01 + urban_sol)
 gen lg_ruralsol = ln(0.01 + agriculture_sol)
+gen lg_totalmol = ln(0.01 + total_meanlight)
+gen lg_urbanmol = ln(0.01 + urban_meanlight)
+gen lg_ruralmol = ln(0.01 + agriculture_meanlight)
 gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
 
 ** 3. Label variables
@@ -56,6 +59,9 @@ label variable lg_ser "Log service GDP"
 label variable lg_totalsol "Log total sum of lights"
 label variable lg_urbansol "Log urban sum of lights"
 label variable lg_ruralsol "Log rural sum of lights"
+label variable lg_totalmol "Log total mean of lights"
+label variable lg_urbanmol "Log urban mean of lights"
+label variable lg_ruralmol "Log rural mean of lights"
 label variable lg_ruralnpp "Log average NPP (net primary productivity) in the rural area"
 label variable pi0101 "CPI (last year = 100)"
 label variable gdp_primind "Primary industry GDP (nominal)"
@@ -63,7 +69,7 @@ label variable gdp_secind "Secondary industry GDP (nominal)"
 label variable gdp_terind "Tertiary industry GDP (nominal)"
 
 ** 4. Save dta file
-save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_longpanel.dta"
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_longpanel.dta", replace
 
 
 
