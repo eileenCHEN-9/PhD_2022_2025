@@ -1,0 +1,15 @@
+		(1)
+VARIABLES	LABELS	Log (GDP per capita)
+		
+lg_totalmol	Log total mean of lights	0.102***
+		(0.007)
+Constant	Constant	8.995***
+		(0.023)
+		
+Observations		29,165
+Number of county_id		2,207
+R-squared		0.894
+Regional FE		Yes
+Year FE		Yes
+Robust standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		
