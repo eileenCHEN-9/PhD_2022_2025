@@ -38,6 +38,9 @@ gen lg_ruralsol = ln(0.01 + agriculture_sol)
 gen lg_totalmol = ln(0.01 + total_meanlight)
 gen lg_urbanmol = ln(0.01 + urban_meanlight)
 gen lg_ruralmol = ln(0.01 + agriculture_meanlight)
+gen lg_totalmidol = ln(0.01 + total_midlight)
+gen lg_urbanmidol = ln(0.01 + urban_midlight)
+gen lg_ruralmidol = ln(0.01 + agriculture_midlight)
 gen lg_ruralnpp = ln(0.01 + agriculture_anpp)
 
 ** 3. Label variables
@@ -62,6 +65,9 @@ label variable lg_ruralsol "Log rural sum of lights"
 label variable lg_totalmol "Log total mean of lights"
 label variable lg_urbanmol "Log urban mean of lights"
 label variable lg_ruralmol "Log rural mean of lights"
+label variable lg_totalmidol "Log total median of lights"
+label variable lg_urbanmidol "Log urban median of lights"
+label variable lg_ruralmidol "Log rural median of lights"
 label variable lg_ruralnpp "Log average NPP (net primary productivity) in the rural area"
 label variable pi0101 "CPI (last year = 100)"
 label variable gdp_primind "Primary industry GDP (nominal)"

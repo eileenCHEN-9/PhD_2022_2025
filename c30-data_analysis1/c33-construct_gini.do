@@ -37,13 +37,11 @@ drop if count_county == 1
 *drop if missing(pred_gdppc_county)
 
 *Generate different per capita GDP
-gen pred_gdppc_county=exp(lg_totalgdp_predicted)/total_population
+gen pred_gdppc_county=exp(lg_gdppc_pred)
 gen totallightpc_county=total_sol/total_population
-gen county_gdppc=county_rgdp/total_population
 
-label variable pred_gdppc_county "Predicted GDP per capita (county)"
+label variable pred_gdppc_county "Predicted GDP per capita using NTL(county)"
 label variable totallightpc_county "Total sum of lights per capita (county)"
-label variable county_gdppc "Real GDP per capita (constant, 2010)"
 label variable count_county "Number of counties per city"
 
 summarize
@@ -199,16 +197,19 @@ gen COVW_light_pc=sqrt(GE_2w_light_pc*2)
 drop GE_2w_light_pc		
 
 ** 5. Calculations of regional inequality measures using observed GDP
+
+replace county_rgdppc = . if county_rgdppc == 0
+
 *GINIW
 gen GINIW_GDP_pc=.
 egen group = group(city_id year)
 su group, meanonly
 qui forval i = 1/`r(max)' {
-	qui count if group == `i' & !missing(county_gdppc)
+	qui count if group == `i' & !missing(county_rgdppc)
   if r(N) > 0 {
-qui ineqdeco county_gdppc [aw=total_population]  if group == `i'
-replace GINIW_GDP_pc = r(gini) if group == `i'	
-  }
+qui ineqdeco county_rgdppc [aw=total_population]  if group == `i'
+replace GINIW_GDP_pc = r(gini) if group == `i'
+  }	
 } 
 
 drop group
@@ -218,9 +219,9 @@ gen GE_m1W_GDP_pc=.
 egen group = group(city_id year)
 su group, meanonly
 qui forval i = 1/`r(max)' {
-	qui count if group == `i' & !missing(county_gdppc)
+	qui count if group == `i' & !missing(county_rgdppc)
   if r(N) > 0 {
-qui ineqdeco county_gdppc [aw=total_population]  if group == `i'
+qui ineqdeco county_rgdppc [aw=total_population]  if group == `i'
 replace GE_m1W_GDP_pc = r(gem1) if group == `i'	
   }
 }
@@ -232,9 +233,9 @@ gen GE_0W_GDP_pc=.
 egen group = group(city_id year)
 su group, meanonly
 qui forval i = 1/`r(max)' {
-	qui count if group == `i' & !missing(county_gdppc)
+	qui count if group == `i' & !missing(county_rgdppc)
   if r(N) > 0 {
-qui ineqdeco county_gdppc [aw=total_population]  if group == `i'
+qui ineqdeco county_rgdppc [aw=total_population]  if group == `i'
 replace GE_0W_GDP_pc = r(ge0) if group == `i'	
   }
 } 
@@ -246,9 +247,9 @@ gen GE_1W_GDP_pc=.
 egen group = group(city_id year)
 su group, meanonly
 qui forval i = 1/`r(max)' {
-	qui count if group == `i' & !missing(county_gdppc)
+	qui count if group == `i' & !missing(county_rgdppc)
   if r(N) > 0 {
-qui ineqdeco county_gdppc [aw=total_population]  if group == `i'
+qui ineqdeco county_rgdppc [aw=total_population]  if group == `i'
 replace GE_1W_GDP_pc = r(ge1) if group == `i'	
   }
 } 
@@ -260,9 +261,9 @@ gen GE_2w_GDP_pc=.
 egen group = group(city_id year)
 su group, meanonly
 qui forval i = 1/`r(max)' {
-	qui count if group == `i' & !missing(county_gdppc)
+	qui count if group == `i' & !missing(county_rgdppc)
   if r(N) > 0 {
-qui ineqdeco county_gdppc [aw=total_population]  if group == `i'
+qui ineqdeco county_rgdppc [aw=total_population]  if group == `i'
 replace GE_2w_GDP_pc = r(ge2) if group == `i'	
   }
 } 
