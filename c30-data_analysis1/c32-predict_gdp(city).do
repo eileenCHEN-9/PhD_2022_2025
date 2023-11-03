@@ -22,7 +22,7 @@ version 17
 *** 2. Import county level dataset
 use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_longpanel.dta", clear
 
-gen lg101214 = ln(0.01 + v21 + v23 + v25)
+gen lg101214 = ln(0.01 + v24 + v26 + v28)
 label variable lg101214 "Log (croplands)"
 
 summarize
@@ -92,9 +92,18 @@ outreg2 using "../results/result1/tab03-4.tex", replace keep(lg101214 lg_ruralnp
 xtreg lg_agri lg_ruralnpp i.year,fe robust
 outreg2 using "../results/result1/tab03-4.tex", append keep(lg101214 lg_ruralnpp) ctitle(Log (agriculture GDP)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
-** 3.3 NTL_mean and GDP per capita
+** 3.3 NTL_mean/median and GDP per capita
 xtreg city_lggdppc lg_totalmol i.year,fe robust
 outreg2 using "../results/result1/tab04-1.tex", replace keep(lg_totalmol) ctitle(Log (GDP per capita)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg city_lggdppc lg_urbanmol i.year,fe robust
+outreg2 using "../results/result1/tab04-1.tex", append keep(lg_urbanmol) ctitle(Log (GDP per capita)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg city_lggdppc lg_totalmidol i.year,fe robust
+outreg2 using "../results/result1/tab04-1.tex", append keep(lg_totalmidol) ctitle(Log (GDP per capita)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg city_lggdppc lg_urbanmidol i.year,fe robust
+outreg2 using "../results/result1/tab04-1.tex", append keep(lg_urbanmidol) ctitle(Log (GDP per capita)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 *** 4. Predict GDP
 

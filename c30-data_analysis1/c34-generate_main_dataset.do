@@ -38,13 +38,11 @@ drop _merge
 sort city_id year
 
 ** 4. Generate necessary variables
-gen pred_gdppc_city=exp(lg_totalgdp_predicted)/total_population*1000
-gen city_gdppc_pred = exp(lg_totalgdp_predicted)/city_pop
+gen pred_gdppc_city=exp(lg_gdppc_predicted)
 gen nonagri_gdp=exp(lg_nonagri_predicted)/exp(lg_totalgdp_predicted)
 gen Emp_nonagri=100-Emp_agri
 
-label variable pred_gdppc_city "Predicted GDP per capita (divide population from landsat)"
-label variable city_gdppc_pred "Predicted GDP per capita (divide population from population census)"
+label variable pred_gdppc_city "Predicted GDP per capita using NTL (mean)"
 label variable agri_gdp "Ratio Of agriculture production To Gdp (%) (predicted)"
 label variable nonagri_gdp "Ratio Of non-agriculture production To Gdp (%) (predicted)"
 label variable ind_gdp "Ratio Of industry production To Gdp (%) (predicted)"

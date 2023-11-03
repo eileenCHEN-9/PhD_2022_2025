@@ -1,21 +1,27 @@
 \documentclass[]{article}
 \setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
 \begin{document}
-\begin{tabular}{lc} \hline
- & (1) \\
-VARIABLES & Log (GDP per capita) \\ \hline
- &  \\
-Log total mean of lights & 0.102*** \\
- & (0.007) \\
-Constant & 8.995*** \\
- & (0.023) \\
- &  \\
-Observations & 29,165 \\
-Number of county\_id & 2,207 \\
-R-squared & 0.894 \\
-Regional FE & Yes \\
- Year FE & Yes \\ \hline
-\multicolumn{2}{c}{ Robust standard errors in parentheses} \\
-\multicolumn{2}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\begin{tabular}{lcccc} \hline
+ & (1) & (2) & (3) & (4) \\
+VARIABLES & Log (GDP per capita) & Log (GDP per capita) & Log (GDP per capita) & Log (GDP per capita) \\ \hline
+ &  &  &  &  \\
+Log total mean of lights & 0.102*** &  &  &  \\
+ & (0.007) &  &  &  \\
+Log urban mean of lights &  & 0.042*** &  &  \\
+ &  & (0.004) &  &  \\
+Log total median of lights &  &  & -0.029*** &  \\
+ &  &  & (0.005) &  \\
+Log urban median of lights &  &  &  & 0.014*** \\
+ &  &  &  & (0.002) \\
+Constant & 8.995*** & 8.669*** & 8.522*** & 8.698*** \\
+ & (0.023) & (0.008) & (0.023) & (0.010) \\
+ &  &  &  &  \\
+Observations & 29,165 & 29,165 & 29,165 & 29,165 \\
+R-squared & 0.894 & 0.891 & 0.890 & 0.890 \\
+Number of county\_id & 2,207 & 2,207 & 2,207 & 2,207 \\
+Regional FE & Yes & Yes & Yes & Yes \\
+ Year FE & Yes & Yes & Yes & Yes \\ \hline
+\multicolumn{5}{c}{ Robust standard errors in parentheses} \\
+\multicolumn{5}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
 \end{tabular}
 \end{document}

@@ -27,8 +27,8 @@ use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/coun
 drop if province_id == 810000 | province_id == 820000 | province_id == 710000
 drop if city_id == 460300
 
-*keep if year>2012
-*keep if year<2014
+*keep if year>2014
+*keep if year<2016
 
 *Drop cities with only one county 
 egen count_county = count(county_id), by(city_id year)
@@ -38,8 +38,7 @@ drop if count_county == 1
 
 *Generate different per capita GDP
 gen pred_gdppc_county=exp(lg_gdppc_pred)
-gen totallightpc_county=total_sol/total_population
-
+gen totallightpc_county=total_meanlight
 label variable pred_gdppc_county "Predicted GDP per capita using NTL(county)"
 label variable totallightpc_county "Total sum of lights per capita (county)"
 label variable count_county "Number of counties per city"
@@ -124,6 +123,9 @@ gen COVW_pred_GDP_pc=sqrt(GE_2w_pred_GDP_pc*2)
 drop GE_2w_pred_GDP_pc		
 
 ** 4. Calculations of regional inequality measures using lights
+
+*replace totallightpc_county = . if totallightpc_county == 0
+
 *GINIW
 gen GINIW_light_pc=.
 egen group = group(city_id year)
@@ -293,7 +295,7 @@ collapse (first) city_id year GINIW_pred_GDP_pc - COVW_GDP_pc, by(id_t_j)
 sort city_id year 		
 drop id_t_j
 					
-save "/Users/yilinchen/Documents/PhD/thesis/data/City_Inequality_Data.dta", replace
+save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/City_Inequality_Data.dta", replace
 
 *Collapse to cross section 	
 collapse (mean) GINIW_pred_GDP_pc - COVW_GDP_pc, by(city_id)						
@@ -306,7 +308,5 @@ pwcorr  GE_m1W_pred_GDP_pc 		GE_m1W_GDP_pc 		GE_m1W_light_pc
 pwcorr  GE_0W_pred_GDP_pc 		GE_0W_GDP_pc 		GE_0W_light_pc
 pwcorr  GE_1W_pred_GDP_pc 		GE_1W_GDP_pc 		GE_1W_light_pc
 pwcorr  COVW_pred_GDP_pc 		COVW_GDP_pc 		COVW_light_pc	
-
-
 
 

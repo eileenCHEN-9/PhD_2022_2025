@@ -1,0 +1,15 @@
+		(1)	(2)
+VARIABLES	LABELS	Log (GDP per capita)	Log (GDP per capita)
+			
+lg_urbanmol	Log urban mean of lights	0.170***	0.170***
+		(0.018)	(0.018)
+Constant	Constant	8.919***	8.919***
+		(0.018)	(0.018)
+			
+Observations		6,092	6,092
+R-squared		0.914	0.914
+Number of city_id		330	330
+Regional FE		Yes	Yes
+Year FE		Yes	Yes
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			
