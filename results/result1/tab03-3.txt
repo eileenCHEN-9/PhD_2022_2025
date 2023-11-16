@@ -1,0 +1,15 @@
+		(1)
+VARIABLES	LABELS	Log (total GDP)
+		
+lg_totalsol	Log total sum of lights	0.160***
+		(0.013)
+Constant	Constant	4.147***
+		(0.103)
+		
+Observations		6,530
+Number of city_id		332
+R-squared		0.935
+Regional FE		Yes
+Year FE		Yes
+Robust standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		

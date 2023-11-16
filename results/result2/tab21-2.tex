@@ -1,0 +1,27 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcccc} \hline
+ & (1) & (2) & (3) & (4) \\
+VARIABLES & Regional inequality & Regional inequality & Regional inequality & Regional inequality \\ \hline
+ &  &  &  &  \\
+Ratio Of agriculture production To Gdp (\%) (predicted) & -0.019 & 0.348*** &  &  \\
+ & (0.049) & (0.099) &  &  \\
+agri\_gdp\_2 &  & -0.747*** &  &  \\
+ &  & (0.199) &  &  \\
+Ratio Of non-agriculture production To Gdp (\%) (predicted) &  &  & 0.570** & 13.670*** \\
+ &  &  & (0.224) & (2.381) \\
+nonagri\_gdp\_2 &  &  &  & -8.221*** \\
+ &  &  &  & (1.417) \\
+Constant & 0.603*** & 0.567*** & 0.139 & -5.062*** \\
+ & (0.011) & (0.013) & (0.182) & (1.001) \\
+ &  &  &  &  \\
+Observations & 6,637 & 6,637 & 6,637 & 6,637 \\
+R-squared & 0.263 & 0.271 & 0.274 & 0.316 \\
+Number of city\_id & 332 & 332 & 332 & 332 \\
+Regional FE & Yes & Yes & Yes & Yes \\
+ Year FE & Yes & Yes & Yes & Yes \\ \hline
+\multicolumn{5}{c}{ Robust standard errors in parentheses} \\
+\multicolumn{5}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\end{tabular}
+\end{document}

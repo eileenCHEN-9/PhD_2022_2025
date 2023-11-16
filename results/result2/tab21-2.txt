@@ -1,0 +1,21 @@
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	Regional inequality	Regional inequality	Regional inequality	Regional inequality
+					
+agri_gdp	Ratio Of agriculture production To Gdp (%) (predicted)	-0.019	0.348***		
+		(0.049)	(0.099)		
+agri_gdp_2	agri_gdp_2		-0.747***		
+			(0.199)		
+nonagri_gdp	Ratio Of non-agriculture production To Gdp (%) (predicted)			0.570**	13.670***
+				(0.224)	(2.381)
+nonagri_gdp_2	nonagri_gdp_2				-8.221***
+					(1.417)
+Constant	Constant	0.603***	0.567***	0.139	-5.062***
+		(0.011)	(0.013)	(0.182)	(1.001)
+					
+Observations		6,637	6,637	6,637	6,637
+R-squared		0.263	0.271	0.274	0.316
+Number of city_id		332	332	332	332
+Regional FE		Yes	Yes	Yes	Yes
+Year FE		Yes	Yes	Yes	Yes
+Robust standard errors in parentheses					
+*** p<0.01, ** p<0.05, * p<0.1					

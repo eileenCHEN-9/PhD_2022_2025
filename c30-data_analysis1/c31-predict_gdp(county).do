@@ -26,6 +26,10 @@ use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/coun
 gen lg101214 = ln(0.01 + v26 + v28 + v30)
 label variable lg101214 "Log (croplands)"
 
+*Drop Hongkong, Macau, Taiwan and Sansha city in South China Sea (no population)
+drop if province_id == 810000 | province_id == 820000 | province_id == 710000
+drop if city_id == 460300
+
 summarize
 describe
 
