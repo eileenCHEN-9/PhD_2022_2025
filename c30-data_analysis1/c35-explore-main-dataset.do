@@ -21,13 +21,43 @@ use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/Main
 
 ** 3. Set panel data structure	
 xtset city_id year
+xi i.year
+xi i.city_id
+set matsize 11000
 
-** 4. Visualisation of TWFE regressions
-*Log total GDP vs. Log sum NTL
-eststo m1a: xtreg city_lggdp lg_totalsol i.year, fe vce(robust)
-**** TWFE via FWL ****
-eststo m1b: twfem reg city_lggdp lg_totalsol, absorb(city_id year) gen(city_id1 year1) newv(r1_) vce(robust)
-label variable r1_city_lggdp   "Residualized total GDP (log)"
-label variable r1_lg_totalsol   "Residualized sum NTL (log)"
-aaplot r1_city_lggdp r1_lg_totalsol, aformat(%9.2f) bformat(%9.2f) name(fig1)
+*Drop useless columns 
+foreach var of varlist _Icity_id_* {
+    drop `var'
+}
+
+describe
+summarize
+
+**Visualisation
+replace gdpct02 = gdpct02/100
+eststo m1a: xtreg GINIW_GDP_pc gdpct02 i.year, fe
+eststo m0b: twfem reg GINIW_GDP_pc gdpct02, absorb(city_id year) gen(icity_id02 year02) newv(r2_) vce(robust)
+  label variable r2_GINIW_GDP_pc   "Residualized GINI coefficient"
+  label variable r2_gdpct02   "Residualized agriculture output share"
+aaplot r2_GINIW_GDP_pc r2_gdpct02, aformat(%9.2f) bformat(%9.2f) name(fig123)
+
+
+xtreg GINIW_GDP_pc agri, be
+
+  eststo m0c: xtreg GINIW_light_pc lg_agri, be
+  preserve
+  sort city_id year
+  collapse (mean) GINIW_light_pc lg_agri, by(city_id)
+  label variable GINIW_light_pc "Cross-sectional GINI coefficient"
+  label variable lg_agri "Cross-sectional Log agriculture GDP"
+aaplot GINIW_light_pc lg_agri, aformat(%9.2f) bformat(%9.2f) name(fig250)
+
+
+
+
+
+
+
+
+
 

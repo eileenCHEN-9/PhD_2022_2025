@@ -146,7 +146,79 @@ save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/county_predicted.
 
 
 
+ 
+  ****TWFE via xtreg 
+  eststo m01: xtreg county_lggdppc lg_totalmol i.year, fe vce(robust)
+  **** TWFE via FWL
+  eststo m02: twfem reg county_lggdppc lg_totalmol, absorb(county_id year) gen(county_id01 year01) newv(r1_) vce(robust)
+  label variable r1_county_lggdppc   "Residualized Log GDP per capita"
+  label variable r1_lg_totalmol   "Residualized Log mean NTL"
+aaplot r1_county_lggdppc r1_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig1)
 
+
+*Log GDP per capita vs. Log mean NTL
+eststo m1a: reg county_lggdppc lg_totalmol
+aaplot county_lggdppc lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig1)
+
+reg county_lggdppc lg_totalmol
+predict y_predicted4, xb
+rename y_predicted4 lg_pregdppc_pooled
+
+gen predgdppc_pool = exp(lg_pregdppc_pooled)
+
+*GINIW
+gen GINIW_predgdp_pool = .
+egen group = group(city_id year)  
+
+su group, meanonly
+qui forval i = 1/`r(max)' {
+  qui count if group == `i' & !missing(predgdppc_pool)
+  if r(N) > 0 {
+    qui ineqdeco predgdppc_pool [aw=total_population] if group == `i' & !missing(predgdppc_pool)
+    replace GINIW_predgdp_pool = r(gini) if group == `i'
+  }
+}
+
+drop group
+
+*Generalized Entropy class  1 (Theil index)
+gen GE_1W_predgdp_pool = .
+egen group = group(city_id year)
+su group, meanonly
+qui forval i = 1/`r(max)' {
+	qui count if group == `i' & !missing(predgdppc_pool)
+  if r(N) > 0 {
+qui ineqdeco predgdppc_pool [aw=total_population]  if group == `i'
+replace GE_1W_predgdp_pool = r(ge1) if group == `i'	
+  }
+} 
+
+drop group
+
+*Create new id by city by year
+gen id_t_j = string(year) + city
+
+*Aggregate city-level GINI index
+collapse (first) city_id year GINIW_predgdp_pool - GE_1W_predgdp_pool, by(id_t_j)
+sort city_id year 		
+drop id_t_j
+
+save "/Users/yilinchen/Downloads/Main_Dataset_pooled.dta"
+
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+
+** 3. Merge with the inequality dataset
+sort city_id year				
+merge city_id year using "Main_Dataset.dta", unique
+keep if _merge==3				
+drop _merge				
+sort city_id year
+
+summarize
+
+*Correlations		
+pwcorr  GINIW_predgdp_pool 		GINIW_GDP_pc 		GINIW_pred_GDP_pc			
+pwcorr  GE_1W_predgdp_pool 		GE_1W_GDP_pc 		GE_1W_pred_GDP_pc
 
 
 
