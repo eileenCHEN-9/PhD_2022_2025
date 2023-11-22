@@ -203,7 +203,7 @@ collapse (first) city_id year GINIW_predgdp_pool - GE_1W_predgdp_pool, by(id_t_j
 sort city_id year 		
 drop id_t_j
 
-save "/Users/yilinchen/Downloads/Main_Dataset_pooled.dta"
+*save "/Users/yilinchen/Downloads/Main_Dataset_pooled.dta"
 
 cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 

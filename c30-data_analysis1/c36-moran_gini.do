@@ -45,6 +45,8 @@ dfuller d.I
 dfuller d.Gini_Light
 
 reg Gini_Light I
+eststo long_term
+
 predict r, resid
 tsline r
 dfuller r, noconstant
@@ -56,7 +58,7 @@ egranger Gini_Light I
 
 *Variables are co-integrated, then estimate the error correction model
 reg d.Gini_Light d.I l.r
-eststo ecm_result
-esttab ecm_result using "tab_IG.tex", replace
+eststo short_term
+esttab long_term short_term using "tab_IG.tex", replace
 
 
