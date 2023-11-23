@@ -1,17 +1,21 @@
-		(1)	(2)
-VARIABLES	LABELS	Log (GDP per capita)	Log (GDP per capita)
-			
-lg_totalmol	Log total mean of lights	0.102***	
-		(0.007)	
-lg_totalmidol	Log total median of lights		-0.029***
-			(0.005)
-Constant	Constant	8.995***	8.522***
-		(0.023)	(0.023)
-			
-Observations		29,165	29,165
-R-squared		0.894	0.890
-Number of county_id		2,207	2,207
-Regional FE		Yes	Yes
-Year FE		Yes	Yes
-Robust standard errors in parentheses			
-*** p<0.01, ** p<0.05, * p<0.1			
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	Log (GDP per capita)	Log (GDP per capita)	Log (GDP per capita)	Log (GDP per capita)
+					
+lg_totalmol	Log total mean of lights	0.102***			
+		(0.007)			
+lg_urbanmol	Log urban mean of lights		0.042***		
+			(0.004)		
+lg_totalmidol	Log total median of lights			-0.029***	
+				(0.005)	
+lg_urbanmidol	Log urban median of lights				0.014***
+					(0.002)
+Constant	Constant	8.995***	8.669***	8.522***	8.698***
+		(0.023)	(0.008)	(0.023)	(0.010)
+					
+Observations		29,165	29,165	29,165	29,165
+R-squared		0.894	0.891	0.890	0.890
+Number of county_id		2,207	2,207	2,207	2,207
+Regional FE		Yes	Yes	Yes	Yes
+Year FE		Yes	Yes	Yes	Yes
+Robust standard errors in parentheses					
+*** p<0.01, ** p<0.05, * p<0.1					

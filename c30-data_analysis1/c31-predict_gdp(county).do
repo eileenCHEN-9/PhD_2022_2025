@@ -110,6 +110,16 @@ outreg2 using "../results/result1/tab02-1.tex", append keep(lg_totalmidol) ctitl
 xtreg county_lggdppc lg_urbanmidol i.year,fe robust
 outreg2 using "../results/result1/tab02-1.tex", append keep(lg_urbanmidol) ctitle(Log (GDP per capita)) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
+
+
+eststo m0a: xtreg county_lggdppc lg_totalmol i.year,fe robust
+eststo m0b: twfem reg county_lggdppc lg_totalmol, absorb(county_id year) gen(icounty_id1 year1) newv(r_) vce(robust)
+label variable r_county_lggdppc   "Residualized GDP per capita (log)"
+label variable r_lg_totalmol   "Residualized mean NTL (log)"
+aaplot r_county_lggdppc r_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig0)
+
+
+
 *** 4. Predict GDP
 
 **Non-agriculture GDP
