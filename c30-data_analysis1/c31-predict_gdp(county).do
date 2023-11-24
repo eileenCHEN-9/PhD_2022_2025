@@ -238,4 +238,68 @@ estimates store random
 hausman fixed random
 
 
+***What if predcting GDPpc controlling year fixed effect only?
+reg county_lggdppc lg_totalmol i.year
+predict y_predicted5, xb
+rename y_predicted5 lg_gdppc_pred_year
+
+gen predgdppc_year = exp(lg_gdppc_pred_year)
+
+*GINIW
+gen GINIW_predgdp_year = .
+egen group = group(city_id year)  
+
+su group, meanonly
+qui forval i = 1/`r(max)' {
+  qui count if group == `i' & !missing(predgdppc_year)
+  if r(N) > 0 {
+    qui ineqdeco predgdppc_year [aw=total_population] if group == `i' & !missing(predgdppc_year)
+    replace GINIW_predgdp_year = r(gini) if group == `i'
+  }
+}
+
+drop group
+
+*Generalized Entropy class  1 (Theil index)
+gen GE_1W_predgdp_year = .
+egen group = group(city_id year)
+su group, meanonly
+qui forval i = 1/`r(max)' {
+	qui count if group == `i' & !missing(predgdppc_year)
+  if r(N) > 0 {
+qui ineqdeco predgdppc_year [aw=total_population]  if group == `i'
+replace GE_1W_predgdp_year = r(ge1) if group == `i'	
+  }
+} 
+
+drop group
+
+*Create new id by city by year
+gen id_t_j = string(year) + city
+
+*Aggregate city-level GINI index
+collapse (first) city_id year GINIW_predgdp_year - GE_1W_predgdp_year, by(id_t_j)
+sort city_id year 		
+drop id_t_j
+
+*Merge with the inequality dataset
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+
+sort city_id year				
+merge city_id year using "Main_Dataset.dta", unique
+keep if _merge==3				
+drop _merge				
+sort city_id year
+
+summarize
+
+*Correlations		
+pwcorr  GINIW_predgdp_year 		GINIW_GDP_pc 		GINIW_pred_GDP_pc			
+pwcorr  GE_1W_predgdp_year 		GE_1W_GDP_pc 		GE_1W_pred_GDP_pc
+
+
+
+
+
+
 
