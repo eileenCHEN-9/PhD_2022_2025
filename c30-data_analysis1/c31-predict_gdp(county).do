@@ -230,5 +230,12 @@ summarize
 pwcorr  GINIW_predgdp_pool 		GINIW_GDP_pc 		GINIW_pred_GDP_pc			
 pwcorr  GE_1W_predgdp_pool 		GE_1W_GDP_pc 		GE_1W_pred_GDP_pc
 
+*Random effect?
+quietly xtreg county_lggdppc lg_totalmol,fe
+estimates store fixed
+quietly xtreg county_lggdppc lg_totalmol,re
+estimates store random
+hausman fixed random
+
 
 

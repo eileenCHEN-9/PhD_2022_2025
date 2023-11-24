@@ -27,13 +27,13 @@ label variable Gini_Light "GINI coefficient based on light density"
 describe
 summarize
 
+** 3. set time series
+destring year, replace
+tsset year
+
 aaplot Gini_Light I
 
 tsline Gini_Light I
-
-*set time series
-destring year, replace
-tsset year
 
 **Co-integration
 *Checking stationary
