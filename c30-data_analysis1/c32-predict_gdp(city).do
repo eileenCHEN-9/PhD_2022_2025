@@ -152,5 +152,3 @@ describe
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_predicted.dta", replace
 
 
-
-

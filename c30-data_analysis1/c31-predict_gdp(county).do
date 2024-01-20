@@ -299,6 +299,39 @@ pwcorr  GE_1W_predgdp_year 		GE_1W_GDP_pc 		GE_1W_pred_GDP_pc
 
 
 
+***Visualisation
+
+  ****TWFE via xtreg 
+  eststo m1A: xtreg county_lggdp lg_totalsol i.year, fe vce(robust)
+  **** TWFE via FWL
+  eststo m1B: twfem reg county_lggdp lg_totalsol, absorb(county_id year) gen(county_id01 year01) newv(r1_) vce(robust)
+  label variable r1_county_lggdp   "Residualized log total GDP"
+  label variable r1_lg_totalsol   "Residualized log sum NTL"
+
+aaplot r1_county_lggdp r1_lg_totalsol, aformat(%9.2f) bformat(%9.2f) ylabel(, nolabel) name(fig1)
+ 
+  ****TWFE via xtreg 
+  eststo m2A: xtreg county_lggdppc lg_totalmol i.year, fe vce(robust)
+  **** TWFE via FWL
+  eststo m2B: twfem reg county_lggdppc lg_totalmol, absorb(county_id year) gen(county_id02 year02) newv(r2_) vce(robust)
+  label variable r2_county_lggdppc   "Residualized log GDP per capita"
+  label variable r2_lg_totalmol   "Residualized log mean NTL"
+
+aaplot r2_county_lggdppc r2_lg_totalmol, aformat(%9.2f) bformat(%9.2f) ylabel(, nolabel) name(fig2)
+
+  ****TWFE via xtreg 
+  eststo m3A: xtreg county_lggdppc lg_totalmidol i.year, fe vce(robust)
+  **** TWFE via FWL
+  eststo m3B: twfem reg county_lggdppc lg_totalmidol, absorb(county_id year) gen(county_id03 year03) newv(r3_) vce(robust)
+  label variable r3_county_lggdppc   "Residualized Residualized log GDP per capita"
+  label variable r3_lg_totalmidol   "Residualized log median NTL"
+
+aaplot r3_county_lggdppc r3_lg_totalmidol, aformat(%9.2f) bformat(%9.2f) ylabel(, nolabel) name(fig3)
+
+* Combine graphs
+graph combine fig1 fig2 fig3, col(3) ycommon xcommon iscale(0.6)
+
+
 
 
 
