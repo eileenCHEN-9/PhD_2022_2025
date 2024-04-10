@@ -1,0 +1,29 @@
+\documentclass[]{article}
+\setlength{\pdfpagewidth}{8.5in} \setlength{\pdfpageheight}{11in}
+\begin{document}
+\begin{tabular}{lcc} \hline
+ & (1) & (2) \\
+VARIABLES & Regional inequality & Regional inequality \\ \hline
+ &  &  \\
+Predicted per capita GDP (log) using NTL & 0.882*** & 0.320 \\
+ & (0.111) & (0.290) \\
+Square of log predicted GDP per capita & -0.048*** & -0.027** \\
+ & (0.006) & (0.011) \\
+Ratio Of agriculture production To Gdp (\%) (predicted) & 0.052 &  \\
+ & (0.043) &  \\
+urban\_pop\_percent & -0.281*** & -0.236*** \\
+ & (0.057) & (0.052) \\
+Ratio Of non-agriculture production To Gdp (\%) (predicted) &  & 1.035* \\
+ &  & (0.619) \\
+Constant & -3.375*** & -0.907 \\
+ & (0.554) & (1.298) \\
+ &  &  \\
+Observations & 6,640 & 6,640 \\
+R-squared & 0.354 & 0.363 \\
+Number of city\_id & 332 & 332 \\
+Regional FE & Yes & Yes \\
+ Year FE & Yes & Yes \\ \hline
+\multicolumn{3}{c}{ Robust standard errors in parentheses} \\
+\multicolumn{3}{c}{ *** p$<$0.01, ** p$<$0.05, * p$<$0.1} \\
+\end{tabular}
+\end{document}

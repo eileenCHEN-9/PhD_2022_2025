@@ -22,18 +22,22 @@ version 15
 *use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/Main_Dataset.dta", clear
 sysuse Main_Dataset
 
-gen lg_gdppc_predicted_2 = lg_gdppc_predicted*lg_gdppc_predicted
-replace agri_gdp = agri_gdp / 100
-replace ind_gdp = ind_gdp / 100
-replace ser_gdp = ser_gdp / 100
-gen agri_gdp_2 = agri_gdp*agri_gdp
-gen ind_gdp_2 = ind_gdp*ind_gdp
-gen ser_gdp_2 = ser_gdp*ser_gdp
-gen nonagri_gdp_2 = nonagri_gdp*nonagri_gdp
+*gen lg_gdppc_predicted_2 = lg_gdppc_predicted*lg_gdppc_predicted
+*replace agri_gdp = agri_gdp / 100
+*replace ind_gdp = ind_gdp / 100
+*replace ser_gdp = ser_gdp / 100
+*gen nonagri_predicted = exp(lg_nonagri_predicted)
+*gen nonagri_predicted_2 = nonagri_predicted*nonagri_predicted
+*gen agri_predicted = exp(lg_agri_predicted)
+*gen agri_predicted_2 = agri_predicted*agri_predicted
+*gen ser_gdp_2 = ser_gdp*ser_gdp
+*gen nonagri_gdp_2 = nonagri_gdp*nonagri_gdp
+*gen urban_pop_percent = urban_pop/total_population
 
-label variable lg_gdppc_predicted_2 "Square of log predicted GDP per capita"
-label variable agri_gdp_2 "Square of share of agricultural GDP"
-label variable nonagri_gdp_2 "Square of share of non-agricultural GDP"
+*label variable nonagri_predicted "Share of non-agricultural GDP"
+*label variable nonagri_predicted_2 "Square of share of non-agricultural GDP"
+*label variable agri_predicted "Share of agricultural GDP"
+*label variable agri_predicted_2 "Square of share of agricultural GDP"
 
 describe
 summarize
@@ -41,32 +45,53 @@ summarize
 *** 3. Run regressions
 *Set panel	
 xtset city_id year
-xi i.year
-xi i.city_id
-set matsize 11000
+*xi i.year
+*xi i.city_id
+*set matsize 11000
 
 **Non-spatial
-*TWFE kuznets curve
+*Non-spatail TWFE kuznets curve
 xtreg GINIW_light_pc lg_gdppc_predicted i.year,fe robust
-outreg2 using "../results/result2/tab21-1.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-0.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 i.year,fe robust
-outreg2 using "../results/result2/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-0.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
-***Structural change
-xtreg GINIW_light_pc agri_gdp i.year,fe robust
-outreg2 using "../results/result2/tab21-2.tex", replace keep(agri_gdp agri_gdp_2 nonagri_gdp nonagri_gdp_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
-xtreg GINIW_light_pc agri_gdp agri_gdp_2 i.year,fe robust
-outreg2 using "../results/result2/tab21-2.tex", append keep(agri_gdp agri_gdp_2 nonagri_gdp nonagri_gdp_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
-xtreg GINIW_light_pc nonagri_gdp i.year,fe robust
-outreg2 using "../results/result2/tab21-2.tex", append keep(agri_gdp agri_gdp_2 nonagri_gdp nonagri_gdp_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
-xtreg GINIW_light_pc nonagri_gdp nonagri_gdp_2 i.year,fe robust
-outreg2 using "../results/result2/tab21-2.tex", append keep(agri_gdp agri_gdp_2 nonagri_gdp nonagri_gdp_2) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+xtreg GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent i.year,fe robust
+outreg2 using "../results/result2/table/tab21-0.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+***Non-spatial Structural change-1
+xtreg GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent i.year,fe robust
+outreg2 using "../results/result2/table/tab21-1.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent i.year,fe robust
+outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+***Non-spatial Structural change-2
+xtreg GINIW_light_pc lg_agri_predicted i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", replace keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_agri_predicted lg_agri_predicted_2 i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_nonagri_predicted i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_nonagri_predicted lg_nonagri_predicted_2 i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_agri_predicted lg_agri_predicted_2 urban_pop_percent i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+xtreg GINIW_light_pc lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent i.year,fe robust
+outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 **Spatial model
 *save my panel data
 sysuse Main_Dataset
 save, replace
+*save Main_Dataset.dta, replace
+
 
 *Import and translate to stata shape file
 spshape2dta "city_edited_thiessen", replace
@@ -106,34 +131,55 @@ describe
 *Create queen contiguity weight matrix
 spwmatrix import using "city_edited_thiessen.gal", wname(Wa) rowstand
 
-**OLS: Non spatial model
-**OLS Fixed Effect
+***Spatial regression model
 sysuse city_edited_thiessen_fullpanel
-xtset _ID year
+*\\\\\spmat import Wi using Wa
 
-*agriculture
-eststo mod1: quietly xtreg GINIW_light_pc agri_gdp agri_gdp_2 i.year,fe robust cluster(ID)
-quietly estadd local FE_city "Yes", replace
-quietly estadd local FE_year "Yes", replace
+**Wald test
+quietly xsmle GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent, fe type(both) leeyu wmat(Wa) mod(sdm) effects
+*Reduce to SAR? (NO if p < 0.05)
+test ([Wx]lg_gdppc_predicted = 0) ([Wx]lg_gdppc_predicted_2 = 0) ([Wx]agri_gdp = 0) ([Wx]urban_pop_percent = 0) 
+*Reduce to SLX? (NO if p < 0.05)
+test ([Spatial]rho = 0)
+*Reduce to SEM? (NO if p < 0.05)
+testnl ([Wx]lg_gdppc_predicted = -[Spatial]rho*[Main]lg_gdppc_predicted) ([Wx]lg_gdppc_predicted_2 = -[Spatial]rho*[Main]lg_gdppc_predicted_2) ([Wx]agri_gdp = -[Spatial]rho*[Main]agri_gdp) ([Wx]urban_pop_percent = -[Spatial]rho*[Main]urban_pop_percent)
 
-*non-agriculture
-eststo mod2: quietly xtreg GINIW_light_pc nonagri_gdp nonagri_gdp_2 i.year,fe robust cluster(ID)
-quietly estadd local FE_city "Yes", replace
-quietly estadd local FE_year "Yes", replace
+quietly xsmle GINIW_light_pc lg_agri_predicted lg_agri_predicted_2 urban_pop_percent, fe type(both) leeyu wmat(Wa) mod(sdm) effects
+*Reduce to SAR? (NO if p < 0.05)
+test ([Wx]lg_agri_predicted = 0) ([Wx]lg_agri_predicted_2 = 0) ([Wx]urban_pop_percent = 0) 
+*Reduce to SLX? (NO if p < 0.05)
+test ([Spatial]rho = 0)
+*Reduce to SEM? (NO if p < 0.05)
+testnl ([Wx]lg_agri_predicted = -[Spatial]rho*[Main]lg_agri_predicted) ([Wx]lg_agri_predicted_2 = -[Spatial]rho*[Main]lg_agri_predicted_2) ([Wx]urban_pop_percent = -[Spatial]rho*[Main]urban_pop_percent)
 
-* Compile professional regression table
+**Spatial Kuznets Curve & Spatial Structural change-1 (SDM)
+xsmle GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+estimate store sdm1
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
+
+
+xsmle GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+estimate store sdm2
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
+
+xsmle GINIW_light_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+estimate store sdm3
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
+
 #delimit;
-    esttab mod1 mod2,
-    keep(agri_gdp agri_gdp_2 nonagri_gdp nonagri_gdp_2)
+    esttab sdm1 sdm2 sdm3,
+    keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent rho)
     se
     label 
-    stats(N N_g r2_a FE_country FE_year, 
+    stats(N N_g r2 FE_city FE_year, 
         fmt(0 0 2)
         label("Observations" "N Cities" "R-squared" "City FE" "Year FE"))
     mtitles(" " " " " ") 
     nonotes
-    addnote("Notes: The dependent variable is the populuation weighted regional Gini index." 
-            "Robusts standard errors are adjusted for clustering at the country level"
+    addnote("Notes: The dependent variable is the GINI index in each city." 
 						"All models include a constant"
             "* p<0.10, ** p<0.05, *** p<0.01")
     star(* 0.10 ** 0.05 *** 0.01)  
@@ -142,34 +188,81 @@ quietly estadd local FE_year "Yes", replace
     replace;
 #delimit cr
 
-**The spatial model: SDM
-*SDM Fixed Effect Model 
-sysuse city_edited_thiessen_fullpanel
+#delimit;
+    esttab sdm1 sdm2 sdm3 using "../results/result2/table/tab22-1.tex",
+    keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent rho)
+    se
+    label 
+    stats(N N_g r2 FE_city FE_year, 
+        fmt(0 0 2)
+        label("Observations" "N Countries" "R-squared" "City FE" "Year FE"))
+    mtitles(" " " " " ") 
+    nonotes
+    addnote("Notes: The dependent variable is the GINI index in each city." 
+            "All models include a constant"
+            "$* p<0.10, ** p<0.05, *** p<0.01$")
+    star(* 0.10 ** 0.05 *** 0.01)  
+    b(%7.3f)
+    replace;
+#delimit cr
 
-*spmat import Wi using Wa
+**Spatial structural change-2 (SDM & SAR)
+xsmle GINIW_light_pc lg_agri_predicted lg_agri_predicted_2 urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+estimate store sdm4
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
 
-quietly xsmle GINIW_light_pc agri_gdp agri_gdp_2, wmat (Wi) model (sdm) fe type (both) effects
-quietly estat ic
-eststo model3
+xsmle GINIW_light_pc lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+estimate store sdm5
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
 
-quietly xsmle GINIW_light_pc nonagri_gdp nonagri_gdp_2, wmat (Wi) model (sdm) fe type (both) effects
-quietly estat ic
-eststo model4
+xsmle GINIW_light_pc lg_agri_predicted lg_agri_predicted_2 urban_pop_percent, fe type(both) wmat(Wa) mod(sar) effects nsim(999) nolog
+estimate store sar4
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
 
-esttab, r2 aic bic
+xsmle GINIW_light_pc lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent, fe type(both) wmat(Wa) mod(sar) effects nsim(999) nolog
+estimate store sar5
+quietly estadd local FE_city   "Yes", replace
+quietly estadd local FE_year   "Yes", replace
 
-estimates store sdm_fe
+#delimit;
+    esttab sdm4 sdm5 sar4 sar5,
+    keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent rho)
+    se
+    label 
+    stats(N N_g r2 aic bic FE_city FE_year, 
+        fmt(0 0 2)
+        label("Observations" "N Cities" "R-squared" "AIC" "BIC" "City FE" "Year FE"))
+    mtitles(" " " " " " " " " ") 
+    nonotes
+    addnote("Notes: The dependent variable is the GINI index in each city." 
+						"All models include a constant"
+            "* p<0.10, ** p<0.05, *** p<0.01")
+    star(* 0.10 ** 0.05 *** 0.01)  
+    b(%7.3f)
+    compress
+    replace;
+#delimit cr
 
-**Wald test
-quietly xsmle GINIW_light_pc agri_gdp agri_gdp_2, fe type(both) leeyu wmat(Wi) mod(sdm) effects
-*Reduce to SAR? (NO if p < 0.05)
-test ([Wx]agri_gdp = 0) ([Wx]agri_gdp_2 = 0)
-*Reduce to SLX? (NO if p < 0.05)
-test ([Spatial]rho = 0)
-*Reduce to SEM? (NO if p < 0.05)
-testnl ([Wx]agri_gdp = -[Spatial]rho*[Main]agri_gdp) ([Wx]agri_gdp_2 = -[Spatial]rho*[Main]agri_gdp_2)
-
-
+#delimit;
+    esttab sar4 sar5 using "../results/result2/table/tab22-2.tex",
+    keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent rho)
+    se
+    label 
+    stats(N N_g r2 FE_city FE_year, 
+        fmt(0 0 2)
+        label("Observations" "N Countries" "R-squared" "City FE" "Year FE"))
+    mtitles(" " " " " ") 
+    nonotes
+    addnote("Notes: The dependent variable is the GINI index in each city." 
+            "All models include a constant"
+            "$* p<0.10, ** p<0.05, *** p<0.01$")
+    star(* 0.10 ** 0.05 *** 0.01)  
+    b(%7.3f)
+    replace;
+#delimit cr
 
 
 
