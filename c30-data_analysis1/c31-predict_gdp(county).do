@@ -17,10 +17,11 @@ clear all
 macro drop _all
 capture log close
 set more off
+set maxvar 32767
 version 17
 
 ** 2. Import county level dataset
-use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/county_longpanel.dta", clear
+use county_longpanel.dta, clear
 
 *calculte the area of croplands
 gen lg101214 = ln(0.01 + v26 + v28 + v30)
@@ -35,9 +36,11 @@ describe
 
 ** 3. Run regressions
 *Set panel	
-xtset county_id year
+egen new_county_id = group(county_id)
+
+xtset new_county_id year
 xi i.year
-xi i.county_id
+xi i.new_county_id
 set matsize 11000
 
 ** 3.1 NTL-GDP
@@ -121,32 +124,102 @@ aaplot r_county_lggdppc r_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig0)
 
 
 *** 4. Predict GDP
-
 **Non-agriculture GDP
-xtreg lg_nonagri lg_totalsol i.year,fe robust
-predict y_predicted1, xbu
-rename y_predicted1 lg_nonagri_predicted
-*Drop useless columns 
-foreach var of varlist _Icounty_id_* {
+xtreg lg_nonagri lg_totalsol _Inew_count_2-_Inew_count_2848, robust cluster(new_county_id)
+	
+predict lg_nonagri_linear, xb						
+gen beta_1=_b[lg_totalsol]			
+forvalues i = 2/2848 {
+    gen beta_`i' = _b[_Inew_count_`i']
+}					
+gen const_1=_b[_cons]	
+
+gen lg_nonagri_predicted = const_1
+
+qui replace lg_nonagri_predicted = lg_nonagri_predicted + beta_1*lg_totalsol
+
+forvalues i = 2/2848 {
+    local county_var _Inew_count_`i'
+    qui gen temp_beta = beta_`i' if `county_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_nonagri_predicted = lg_nonagri_predicted + temp_beta
+    qui drop temp_beta
+}
+
+foreach var of varlist beta_* {
+    drop `var'
+}	
+
+drop const_1
+
+**Agriculture GDP
+xtreg lg_agri lg_ruralnpp _Inew_count_2-_Inew_count_2848, robust cluster(new_county_id)
+
+predict lg_agri_linear, xb						
+gen beta_1=_b[lg_ruralnpp]			
+forvalues i = 2/2848 {
+    gen beta_`i' = _b[_Inew_count_`i']
+}					
+gen const_1=_b[_cons]	
+
+gen lg_agri_predicted = const_1
+
+qui replace lg_agri_predicted = lg_agri_predicted + beta_1*lg_ruralnpp
+
+forvalues i = 2/2848 {
+    local county_var _Inew_count_`i'
+    qui gen temp_beta = beta_`i' if `county_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_agri_predicted = lg_agri_predicted + temp_beta
+    qui drop temp_beta
+}
+
+foreach var of varlist beta_* {
     drop `var'
 }
 
-**Agriculture GDP
-xtreg lg_agri lg_ruralnpp i.year,fe robust
-predict y_predicted2, xbu
-rename  y_predicted2 lg_agri_predicted
+drop const_1
 
 **GDP per capita
-xtreg county_lggdppc lg_totalmol i.year,fe robust
-predict y_predicted3, xbu
-rename y_predicted3 lg_gdppc_predicted
+xtreg county_lggdppc lg_totalmol _Inew_count_2-_Inew_count_2848, robust cluster(new_county_id)
+	
+predict lg_gdppc_linear, xb						
+gen beta_1=_b[lg_totalmol]			
+forvalues i = 2/2848 {
+    gen beta_`i' = _b[_Inew_count_`i']
+}					
+gen const_1=_b[_cons]	
 
+gen lg_gdppc_predicted = const_1
+
+qui replace lg_gdppc_predicted = lg_gdppc_predicted + beta_1*lg_totalmol
+
+forvalues i = 2/2848 {
+    local county_var _Inew_count_`i'
+    qui gen temp_beta = beta_`i' if `county_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_gdppc_predicted = lg_gdppc_predicted + temp_beta
+    qui drop temp_beta
+}
+
+drop const_1
+
+*Generate new variables
 gen lg_totalgdp_predicted= ln(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
 
 label variable lg_nonagri_predicted "Predicted non-agriculture GDP (log) using NTL"
 label variable lg_agri_predicted "Predicted agriculture GDP (log) using NPP"
 label variable lg_totalgdp_predicted "Predicted total GDP (log) using NTL and NPP"
 label variable lg_gdppc_predicted "Predicted per capita GDP (log) using NTL"
+
+*Drop useless columns 
+foreach var of varlist _Inew_count_* {
+    drop `var'
+}		
+
+foreach var of varlist beta_* {
+    drop `var'
+}
 
 summarize
 describe
@@ -156,6 +229,18 @@ save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/county_predicted.
 
 
 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
   ****TWFE via xtreg 
   eststo m01: xtreg county_lggdppc lg_totalmol i.year, fe vce(robust)
