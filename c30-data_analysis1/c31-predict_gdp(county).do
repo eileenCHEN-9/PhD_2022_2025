@@ -124,7 +124,7 @@ aaplot r_county_lggdppc r_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig0)
 
 **Non-agriculture GDP
 xtreg lg_nonagri lg_totalsol i.year,fe robust
-predict y_predicted1, xb
+predict y_predicted1, xbu
 rename y_predicted1 lg_nonagri_predicted
 *Drop useless columns 
 foreach var of varlist _Icounty_id_* {
@@ -133,12 +133,12 @@ foreach var of varlist _Icounty_id_* {
 
 **Agriculture GDP
 xtreg lg_agri lg_ruralnpp i.year,fe robust
-predict y_predicted2, xb
+predict y_predicted2, xbu
 rename  y_predicted2 lg_agri_predicted
 
 **GDP per capita
 xtreg county_lggdppc lg_totalmol i.year,fe robust
-predict y_predicted3, xb
+predict y_predicted3, xbu
 rename y_predicted3 lg_gdppc_predicted
 
 gen lg_totalgdp_predicted= ln(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))

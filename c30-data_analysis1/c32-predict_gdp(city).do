@@ -10,7 +10,7 @@ cls
 
 * Data files created as intermediate product:
 *===========================================
-*cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 
 *** 1. Setup
 clear all
@@ -20,7 +20,7 @@ set more off
 version 17
 
 *** 2. Import county level dataset
-use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/city_longpanel.dta", clear
+use "city_longpanel.dta", clear
 
 gen lg101214 = ln(0.01 + v24 + v26 + v28)
 label variable lg101214 "Log (croplands)"
@@ -34,9 +34,11 @@ describe
 
 *** 3. Run regressions
 *Set panel	
-xtset city_id year
+egen new_city_id = group(city_id)
+
+xtset new_city_id year
 xi i.year
-xi i.city_id
+xi i.new_city_id
 set matsize 11000
 
 ** 3.1 NTL and sectoral GDP
@@ -120,25 +122,89 @@ aaplot r_city_lggdppc r_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig0)
 *** 4. Predict GDP
 
 **Non-agriculture GDP
-xtreg lg_nonagri lg_totalsol i.year,fe robust
-predict y_predicted1, xb
-rename y_predicted1 lg_nonagri_predicted
-*Drop useless columns 
-foreach var of varlist _Icity_id_* {
+xtreg lg_nonagri lg_totalsol _Inew_city__2-_Inew_city__367, robust cluster(new_city_id)
+	
+predict lg_nonagri_linear, xb						
+gen beta_1=_b[lg_totalsol]			
+forvalues i = 2/367 {
+    gen beta_`i' = _b[_Inew_city__`i']
+}					
+gen const_1=_b[_cons]	
+
+gen lg_nonagri_predicted = const_1
+
+qui replace lg_nonagri_predicted = lg_nonagri_predicted + beta_1*lg_totalsol
+
+forvalues i = 2/367 {
+    local city_var _Inew_city__`i'
+    qui gen temp_beta = beta_`i' if `city_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_nonagri_predicted = lg_nonagri_predicted + temp_beta
+    qui drop temp_beta
+}
+
+foreach var of varlist beta_* {
+    drop `var'
+}	
+
+drop const_1
+
+**Agriculture GDP
+xtreg lg_agri lg_ruralnpp _Inew_city__2-_Inew_city__367, robust cluster(new_city_id)
+
+predict lg_agri_linear, xb						
+gen beta_1=_b[lg_ruralnpp]			
+forvalues i = 2/367 {
+    gen beta_`i' = _b[_Inew_city__`i']
+}					
+gen const_1=_b[_cons]	
+
+gen lg_agri_predicted = const_1
+
+qui replace lg_agri_predicted = lg_agri_predicted + beta_1*lg_ruralnpp
+
+forvalues i = 2/367 {
+    local city_var _Inew_city__`i'
+    qui gen temp_beta = beta_`i' if `city_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_agri_predicted = lg_agri_predicted + temp_beta
+    qui drop temp_beta
+}
+
+foreach var of varlist beta_* {
     drop `var'
 }
 
-**Agriculture GDP
-xtreg lg_agri lg_ruralnpp i.year,fe robust
-predict y_predicted2, xb
-rename  y_predicted2 lg_agri_predicted
+drop const_1
 
 **GDP per capita
-xtreg city_lggdppc lg_totalmol i.year,fe robust
-predict y_predicted3, xb
-rename y_predicted3 lg_gdppc_predicted
+xtreg city_lggdppc lg_totalmol _Inew_city__2-_Inew_city__367, robust cluster(new_city_id)
+	
+predict lg_gdppc_linear, xb						
+gen beta_1=_b[lg_totalmol]			
+forvalues i = 2/367 {
+    gen beta_`i' = _b[_Inew_city__`i']
+}					
+gen const_1=_b[_cons]	
 
+gen lg_gdppc_predicted = const_1
+
+qui replace lg_gdppc_predicted = lg_gdppc_predicted + beta_1*lg_totalmol
+
+forvalues i = 2/367 {
+    local city_var _Inew_city__`i'
+    qui gen temp_beta = beta_`i' if `city_var' == 1
+    qui replace temp_beta = 0 if missing(temp_beta)
+    qui replace lg_gdppc_predicted = lg_gdppc_predicted + temp_beta
+    qui drop temp_beta
+}
+
+drop const_1
+
+*Generate new variables
 gen lg_totalgdp_predicted= ln(exp(lg_agri_predicted) + exp(lg_nonagri_predicted))
+gen agri_gdp = exp(lg_agri_predicted)/exp(lg_totalgdp_predicted)
+gen nonagri_gdp = exp(lg_nonagri_predicted)/exp(lg_totalgdp_predicted)
 
 label variable lg_nonagri_predicted "Predicted non-agriculture GDP (log) using NTL"
 label variable lg_agri_predicted "Predicted agriculture GDP (log) using NPP"
@@ -147,6 +213,15 @@ label variable lg_gdppc_predicted "Predicted per capita GDP (log) using NTL"
 
 summarize
 describe
+
+*Drop useless columns 
+foreach var of varlist _Inew_city__* {
+    drop `var'
+}		
+
+foreach var of varlist beta_* {
+    drop `var'
+}	
 
 *** 5. Save dta file
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_predicted.dta", replace
