@@ -1,21 +1,21 @@
 		(1)	(2)
 VARIABLES	LABELS	Regional inequality	Regional inequality
 			
-lg_gdppc_predicted	Predicted per capita GDP (log) using NTL	0.882***	0.320
-		(0.111)	(0.290)
-lg_gdppc_predicted_2	Square of log predicted GDP per capita	-0.048***	-0.027**
-		(0.006)	(0.011)
-agri_gdp	Ratio Of agriculture production To Gdp (%) (predicted)	0.052	
-		(0.043)	
-urban_pop_percent	urban_pop_percent	-0.281***	-0.236***
-		(0.057)	(0.052)
-nonagri_gdp	Ratio Of non-agriculture production To Gdp (%) (predicted)		1.035*
-			(0.619)
-Constant	Constant	-3.375***	-0.907
-		(0.554)	(1.298)
+lg_gdppc_predicted	Predicted per capita GDP (log) using NTL	0.229***	0.229***
+		(0.068)	(0.068)
+lg_gdppc_predicted_2	Square of per capita GDP (predicted)	-0.014***	-0.014***
+		(0.003)	(0.003)
+agri_gdp	Ratio Of agriculture production To Gdp (%) (predicted)	-0.162***	
+		(0.037)	
+urban_pop_percent	Urbanisation	-0.262***	-0.262***
+		(0.067)	(0.067)
+nonagri_gdp	Ratio Of non-agriculture production To Gdp (%) (predicted)		0.162***
+			(0.037)
+Constant	Constant	-0.178	-0.340
+		(0.359)	(0.337)
 			
-Observations		6,640	6,640
-R-squared		0.354	0.363
+Observations		6,637	6,637
+R-squared		0.336	0.336
 Number of city_id		332	332
 Regional FE		Yes	Yes
 Year FE		Yes	Yes

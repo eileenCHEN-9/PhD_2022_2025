@@ -22,22 +22,22 @@ version 15
 *use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/Main_Dataset.dta", clear
 sysuse Main_Dataset
 
-*gen lg_gdppc_predicted_2 = lg_gdppc_predicted*lg_gdppc_predicted
+gen lg_gdppc_predicted_2 = lg_gdppc_predicted*lg_gdppc_predicted
 *replace agri_gdp = agri_gdp / 100
 *replace ind_gdp = ind_gdp / 100
 *replace ser_gdp = ser_gdp / 100
 *gen nonagri_predicted = exp(lg_nonagri_predicted)
-*gen nonagri_predicted_2 = nonagri_predicted*nonagri_predicted
+gen lg_nonagri_predicted_2 = lg_nonagri_predicted*lg_nonagri_predicted
 *gen agri_predicted = exp(lg_agri_predicted)
-*gen agri_predicted_2 = agri_predicted*agri_predicted
+gen lg_agri_predicted_2 = lg_agri_predicted*lg_agri_predicted
 *gen ser_gdp_2 = ser_gdp*ser_gdp
-*gen nonagri_gdp_2 = nonagri_gdp*nonagri_gdp
-*gen urban_pop_percent = urban_pop/total_population
+gen urban_pop_percent = urban_pop/total_population
 
 *label variable nonagri_predicted "Share of non-agricultural GDP"
-*label variable nonagri_predicted_2 "Square of share of non-agricultural GDP"
-*label variable agri_predicted "Share of agricultural GDP"
-*label variable agri_predicted_2 "Square of share of agricultural GDP"
+label variable lg_nonagri_predicted_2 "Square of share of non-agricultural GDP"
+label variable lg_agri_predicted_2 "Square of share of agricultural GDP"
+label variable lg_gdppc_predicted_2 "Square of per capita GDP (predicted)"
+label variable urban_pop_percent "Urbanisation"
 
 describe
 summarize
@@ -91,7 +91,6 @@ outreg2 using "../results/result2/table/tab21-2.tex", append keep(lg_agri_predic
 sysuse Main_Dataset
 save, replace
 *save Main_Dataset.dta, replace
-
 
 *Import and translate to stata shape file
 spshape2dta "city_edited_thiessen", replace

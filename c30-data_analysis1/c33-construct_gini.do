@@ -10,7 +10,7 @@ cls
 
 * Data files created as intermediate product:
 *===========================================
-* cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 * ssc install ineqdeco, replace
 
 ** 1. Setup
@@ -18,10 +18,11 @@ clear all
 macro drop _all
 capture log close
 set more off
+set maxvar 32567
 version 15
 
 ** 2. Import county level dataset
-use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/county_predicted.dta", clear
+use county_predicted.dta, clear
 
 *Drop Hongkong, Macau, Taiwan and Sansha city in South China Sea (no population)
 drop if province_id == 810000 | province_id == 820000 | province_id == 710000
@@ -298,7 +299,7 @@ drop id_t_j
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/City_Inequality_Data.dta", replace
 
 *Collapse to cross section 	
-collapse (mean) GINIW_pred_GDP_pc - COVW_GDP_pc, by(city_id)						
+collapse (mean) GINIW_light_pc - COVW_pred_GDP_pc, by(city_id)						
 describe
 summarize
 
