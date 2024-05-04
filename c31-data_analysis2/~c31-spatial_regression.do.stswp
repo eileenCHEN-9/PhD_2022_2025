@@ -246,7 +246,7 @@ quietly estadd local FE_year   "Yes", replace
 #delimit cr
 
 #delimit;
-    esttab sar4 sar5 using "../results/result2/table/tab22-2.tex",
+    esttab sdm4 sdm5 using "../results/result2/table/tab22-2.tex",
     keep(lg_agri_predicted lg_agri_predicted_2 lg_nonagri_predicted lg_nonagri_predicted_2 urban_pop_percent rho)
     se
     label 
