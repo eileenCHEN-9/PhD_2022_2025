@@ -9,7 +9,7 @@ cls
   * /Users/yilinchen/Documents/PhD/thesis/data
 * Data files created as final product:
 *===========================================
-cd "/Users/yilinchen/Documents/PhD/thesis/data"
+cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
 
 ** 1. Setup
 clear all
