@@ -22,7 +22,7 @@ version 15
 use "moran_gini.dta", clear
 
 label variable I "Moran's I"
-label variable Gini_Light "GINI coefficient based on light density"
+label variable Gini_Predicted_GDP "GINI coefficient based on light density"
 
 describe
 summarize
@@ -31,20 +31,20 @@ summarize
 destring year, replace
 tsset year
 
-aaplot Gini_Light I
+aaplot Gini_Predicted_GDP I
 
-tsline Gini_Light I
+tsline Gini_Predicted_GDP I
 
 **Co-integration
 *Checking stationary
 gen rI=d.I/l.I
-gen rGINI=d.Gini_Light/l.Gini_Light
+gen rGINI=d.Gini_Predicted_GDP/l.Gini_Predicted_GDP
 dfuller rI
 dfuller rGINI
 dfuller d.I
-dfuller d.Gini_Light
+dfuller d.Gini_Predicted_GDP
 
-reg Gini_Light I
+reg Gini_Predicted_GDP I
 eststo long_term
 
 predict r, resid
@@ -54,10 +54,10 @@ dfuller r, noconstant
 reg rGINI rI l.r
 
 *Engle Granger co-integration
-egranger Gini_Light I
+egranger Gini_Predicted_GDP I
 
 *Variables are co-integrated, then estimate the error correction model
-reg d.Gini_Light d.I l.r
+reg d.Gini_Predicted_GDP d.I l.r
 eststo short_term
 esttab long_term short_term using "tab_IG.tex", replace
 
