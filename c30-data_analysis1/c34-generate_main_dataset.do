@@ -10,8 +10,9 @@ cls
   * "City_Inequality_Data.dta"
 * Data files created as final product:
 *===========================================
-
 cd "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data"
+
+cd "/Users/yilinchen/Downloads/Data_fixed"
 
 ** 1. Setup
 clear all

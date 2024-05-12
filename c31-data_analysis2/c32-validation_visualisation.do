@@ -95,31 +95,42 @@ xtreg lg_ser lg_totalsol i.year,fe robust
 predict y_predicted2, xbu
 rename y_predicted2 lg_ser_predicted
 
+xtreg lg_agri lg_totalsol i.year,fe robust
+predict y_predicted3, xbu
+rename y_predicted3 lg_agri_predicted1
+
 **Non-agriculture
 *Beijing(110000)
 keep if city_id == 110000
-twoway (scatter lg_nonagri_predicted year) (lowess lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig6)
+twoway (scatter lg_nonagri_predicted year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig6)
 
-twoway (scatter lg_ind_predicted year) (lowess lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Beijing") name (fig7)
+twoway (scatter lg_agri_predicted1 year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Beijing") name(fig66)
 
-twoway (scatter lg_ser_predicted year) (lowess lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name (fig8)
+twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Beijing") name (fig7)
+
+twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name (fig8)
+
+graph combine fig66 fig7 fig8, col(3) ycommon xcommon iscale(0.8)
 
 *Shanghai(310000)
 keep if city_id == 310000
-twoway (scatter lg_nonagri_predicted year) (lowess lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Shanghai") name(fig9)
+twoway (scatter lg_nonagri_predicted year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Shanghai") name(fig9)
 
-twoway (scatter lg_ind_predicted year) (lowess lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Shanghai") name(fig10)
+twoway (scatter lg_agri_predicted1 year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Shanghai") name(fig99)
 
-twoway (scatter lg_ser_predicted year) (lowess lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Shanghai") name(fig11)
+twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Shanghai") name(fig10)
 
+twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Shanghai") name(fig11)
+
+graph combine fig99 fig10 fig11, col(3) ycommon xcommon iscale(0.8)
 
 *Shenzhen(440300)
 keep if city_id == 440300
-twoway (scatter lg_nonagri_predicted year) (lowess lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig12)
+twoway (scatter lg_nonagri_predicted year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig12)
 
-twoway (scatter lg_ind_predicted year) (lowess lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Beijing") name(fig13)
+twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Beijing") name(fig13)
 
-twoway (scatter lg_ser_predicted year) (lowess lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name(fig14)
+twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name(fig14)
  
 
 **Agriculture
@@ -129,10 +140,10 @@ twoway (scatter lg_agri_predicted year) (lfit lg_agri year), legend(off) ytitle(
  
 *Ya an(511800)
 keep if city_id == 511800
-twoway (scatter lg_agri_predicted year) (lowess lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Ya'an") name(fig16)
+twoway (scatter lg_agri_predicted year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Ya'an") name(fig16)
 
 *Kashi(653100)
 keep if city_id == 653100
-twoway (scatter lg_agri_predicted year) (lowess lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Kashi") name(fig17)
+twoway (scatter lg_agri_predicted year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Kashi") name(fig17)
 
 

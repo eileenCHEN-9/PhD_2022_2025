@@ -38,10 +38,10 @@ drop if count_county == 1
 *drop if missing(pred_gdppc_county)
 
 *Generate different per capita GDP
-gen pred_gdppc_county=exp(lg_gdppc_pred)
+gen pred_gdppc_county=exp(lg_gdppc_predicted)
 gen totallightpc_county=total_meanlight
 label variable pred_gdppc_county "Predicted GDP per capita using NTL(county)"
-label variable totallightpc_county "Total sum of lights per capita (county)"
+label variable totallightpc_county "Mean of lights (county)"
 label variable count_county "Number of counties per city"
 
 summarize
@@ -299,7 +299,7 @@ drop id_t_j
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/City_Inequality_Data.dta", replace
 
 *Collapse to cross section 	
-collapse (mean) GINIW_light_pc - COVW_pred_GDP_pc, by(city_id)						
+collapse (mean) GINIW_pred_GDP_pc - COVW_GDP_pc, by(city_id)						
 describe
 summarize
 
