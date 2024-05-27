@@ -21,14 +21,6 @@ use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/Main
 
 ** 3. Set panel data structure	
 xtset city_id year
-xi i.year
-xi i.city_id
-set matsize 11000
-
-*Drop useless columns 
-foreach var of varlist _Icity_id_* {
-    drop `var'
-}
 
 describe
 summarize

@@ -1,23 +1,23 @@
-		(1)	(2)	(3)	(4)	(5)	(6)
-VARIABLES	LABELS	Regional inequality	Regional inequality	Regional inequality	Regional inequality	Regional inequality	Regional inequality
-							
-lg_agri_predicted	Predicted agriculture GDP (log) using NPP	-0.082**	-0.084**			-0.085***	
-		(0.034)	(0.034)			(0.033)	
-lg_agri_predicted_2	Square of share of agricultural GDP		0.000			0.000	
-			(0.001)			(0.001)	
-lg_nonagri_predicted	Predicted non-agriculture GDP (log) using NTL			0.029***	0.039***		0.037***
-				(0.004)	(0.006)		(0.006)
-lg_nonagri_predicted_2	Square of share of non-agricultural GDP				-0.001***		-0.001***
-					(0.000)		(0.000)
-urban_pop_percent	Urbanisation					-0.049***	-0.034**
-						(0.017)	(0.016)
-Constant	Constant	0.485***	0.488***	0.021	-0.001	0.503***	0.013
-		(0.127)	(0.126)	(0.023)	(0.024)	(0.124)	(0.025)
-							
-Observations		6,640	6,640	6,640	6,640	6,640	6,640
-R-squared		0.018	0.018	0.062	0.080	0.032	0.086
-Number of city_id		332	332	332	332	332	332
-Regional FE		Yes	Yes	Yes	Yes	Yes	Yes
-Year FE		Yes	Yes	Yes	Yes	Yes	Yes
-Robust standard errors in parentheses							
-*** p<0.01, ** p<0.05, * p<0.1							
+		(1)	(2)
+VARIABLES	LABELS	Regional inequality	Regional inequality
+			
+lg_agri_predicted	Predicted agriculture GDP (log) using NPP	-0.085***	
+		(0.033)	
+lg_agri_predicted_2	Square of share of agricultural GDP	0.000	
+		(0.001)	
+urban_pop_percent	Urbanisation	-0.049***	-0.034**
+		(0.017)	(0.016)
+lg_nonagri_predicted	Predicted non-agriculture GDP (log) using NTL		0.037***
+			(0.006)
+lg_nonagri_predicted_2	Square of share of non-agricultural GDP		-0.001***
+			(0.000)
+Constant	Constant	0.503***	0.013
+		(0.124)	(0.025)
+			
+Observations		6,640	6,640
+R-squared		0.032	0.086
+Number of city_id		332	332
+Regional FE		Yes	Yes
+Year FE		Yes	Yes
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			
