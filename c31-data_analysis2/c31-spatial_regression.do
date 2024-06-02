@@ -34,9 +34,11 @@ gen lg_agri_predicted_2 = lg_agri_predicted*lg_agri_predicted
 gen urban_pop_percent = urban_pop/total_population
 
 *label variable nonagri_predicted "Share of non-agricultural GDP"
-label variable lg_nonagri_predicted_2 "Square of share of non-agricultural GDP"
-label variable lg_agri_predicted_2 "Square of share of agricultural GDP"
+label variable lg_nonagri_predicted_2 "Square of predicted non-agriculture GDP (log)"
+label variable lg_agri_predicted_2 "Square of predicted agriculture GDP (log)"
 label variable lg_gdppc_predicted_2 "Square of per capita GDP (predicted)"
+label variable agri_gdp "Ratio Of agriculture GDP (\%) (predicted)"
+label variable nonagri_gdp "Ratio Of non-agriculture GDP (\%) (predicted)"
 label variable urban_pop_percent "Urbanisation"
 
 describe
@@ -52,20 +54,23 @@ xtset city_id year
 **Non-spatial
 *Non-spatail TWFE kuznets curve
 xtreg GINIW_pred_GDP_pc lg_gdppc_predicted i.year,fe robust
-outreg2 using "../results/result2/table/tab21-0.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-1.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 i.year,fe robust
-outreg2 using "../results/result2/table/tab21-0.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent i.year,fe robust
-outreg2 using "../results/result2/table/tab21-0.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
-
-***Non-spatial Structural change-1
-xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent i.year,fe robust
-outreg2 using "../results/result2/table/tab21-1.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent i.year,fe robust
-outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+***Non-spatial Structural change-1
+*xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent i.year,fe robust
+*outreg2 using "../results/result2/table/tab21-1.tex", replace keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
+
+*xtreg GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent i.year,fe robust
+*outreg2 using "../results/result2/table/tab21-1.tex", append keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent) ctitle(Regional inequality) addtext(Regional FE, Yes, Year FE, Yes) dec(3) label
 
 ***Non-spatial Structural change-2
 xtreg GINIW_pred_GDP_pc lg_agri_predicted i.year,fe robust
@@ -157,25 +162,25 @@ estimate store sdm1
 quietly estadd local FE_city   "Yes", replace
 quietly estadd local FE_year   "Yes", replace
 
-xsmle GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+*xsmle GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
+*estimate store sdm2
+*quietly estadd local FE_city   "Yes", replace
+*quietly estadd local FE_year   "Yes", replace
+
+xsmle GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
 estimate store sdm2
 quietly estadd local FE_city   "Yes", replace
 quietly estadd local FE_year   "Yes", replace
 
-xsmle GINIW_pred_GDP_pc lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent, fe type(both) wmat(Wa) mod(sdm) effects nsim(999) nolog
-estimate store sdm3
-quietly estadd local FE_city   "Yes", replace
-quietly estadd local FE_year   "Yes", replace
-
 #delimit;
-    esttab sdm1 sdm2 sdm3,
-    keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent rho)
+    esttab sdm1 sdm2,
+    keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent rho)
     se
     label 
     stats(N N_g r2 FE_city FE_year, 
         fmt(0 0 2)
         label("Observations" "N Cities" "R-squared" "City FE" "Year FE"))
-    mtitles(" " " " " ") 
+    mtitles("(1)" "(2)") 
     nonotes
     addnote("Notes: The dependent variable is the GINI index in each city." 
 						"All models include a constant"
@@ -187,14 +192,14 @@ quietly estadd local FE_year   "Yes", replace
 #delimit cr
 
 #delimit;
-    esttab sdm1 sdm2 sdm3 using "../results/result2/table/tab22-1.tex",
-    keep(lg_gdppc_predicted lg_gdppc_predicted_2 agri_gdp nonagri_gdp urban_pop_percent rho)
+    esttab sdm1 sdm2 using "../results/result2/table/tab22-1.tex",
+    keep(lg_gdppc_predicted lg_gdppc_predicted_2 nonagri_gdp urban_pop_percent rho)
     se
     label 
     stats(N N_g r2 FE_city FE_year, 
         fmt(0 0 2)
         label("Observations" "N Countries" "R-squared" "City FE" "Year FE"))
-    mtitles(" " " " " ") 
+    mtitles("(1)" "(2)") 
     nonotes
     addnote("Notes: The dependent variable is the GINI index in each city." 
             "All models include a constant"
