@@ -99,10 +99,14 @@ xtreg lg_agri lg_totalsol i.year,fe robust
 predict y_predicted3, xbu
 rename y_predicted3 lg_agri_predicted1
 
+xtreg lg_nonagri lg_totalsol i.year,fe robust
+predict y_predicted4, xbu
+rename y_predicted4 lg_nonagri_predicted1
+
 **Non-agriculture
 *Beijing(110000)
 keep if city_id == 110000
-twoway (scatter lg_nonagri_predicted year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig6)
+twoway (scatter lg_nonagri_predicted1 year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig6)
 
 twoway (scatter lg_agri_predicted1 year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Beijing") name(fig66)
 
@@ -126,12 +130,15 @@ graph combine fig99 fig10 fig11, col(3) ycommon xcommon iscale(0.8)
 
 *Shenzhen(440300)
 keep if city_id == 440300
-twoway (scatter lg_nonagri_predicted year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Beijing") name(fig12)
+twoway (scatter lg_nonagri_predicted1 year) (lfit lg_nonagri year), legend(off) ytitle("Log GDP (non-agriculture)") xtitle("Year") title("Shenzhen") name(fig12)
 
-twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Beijing") name(fig13)
+twoway (scatter lg_agri_predicted1 year) (lfit lg_agri year), legend(off) ytitle("Log GDP (agriculture)") xtitle("Year") title("Shenzhen") name(fig13)
 
-twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name(fig14)
- 
+twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("Log GDP (industry)") xtitle("Year") title("Shenzhen") name(fig14)
+
+twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Shenzhen") name(fig15)
+
+graph combine fig13 fig14 fig15, col(3) ycommon xcommon iscale(0.8)
 
 **Agriculture
 *Qitaihe(230900)
