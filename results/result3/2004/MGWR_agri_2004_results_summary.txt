@@ -1,0 +1,90 @@
+================================================================================
+MGWR Version: 2.2.1
+Released on: 03/20/2020
+Source code is available at: https://github.com/pysal/mgwr
+Development Team: Ziqi Li, Taylor Oshan, Stewart Fotheringham, Wei Kang, 
+Levi Wolf, Hanchen Yu, Mehak Sachdeva, and Sarah Bardin
+Spatial Analysis Research Center (SPARC)
+Arizona State University, Tempe, USA
+================================================================================
+Model type:                                                             Gaussian
+Number of observations:                                                      332
+Number of covariates:                                                          8
+Dependent variable:                                               giniw_pred_gdp_pc
+Variable standardization:                                                     On
+Total runtime:                                                           0:01:05
+
+Global Regression Results
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 321.574
+Log-likelihood:                                                         -465.791
+AIC:                                                                     947.582
+AICc:                                                                    950.141
+R2:                                                                        0.031
+Adj. R2:                                                                   0.010
+
+Variable                                   Est.         SE  t(Est/SE)    p-value
+------------------------------------ ---------- ---------- ---------- ----------
+Intercept                                 0.000      0.055      0.000      1.000
+lg_agri_predicted                         0.213      0.291      0.731      0.465
+lg_agri_predicted_2                      -0.193      0.291     -0.663      0.507
+nonagri_percent                           0.098      0.073      1.344      0.179
+emp_nonagri                               0.103      0.061      1.688      0.091
+urban_pop_percent                        -0.148      0.069     -2.152      0.031
+agri_inter                                0.084      0.077      1.088      0.277
+nonagri_inter                             0.070      0.077      0.912      0.362
+
+Multiscale Geographically Weighted Regression (MGWR) Results
+--------------------------------------------------------------------------------
+Coordinates type:                                                      Projected
+Spatial kernel:                                                Adaptive bisquare
+Criterion for optimal bandwidth:                                            AICc
+Score of change (SOC) type:                                          Smoothing f
+Termination criterion for MGWR:                                          1.0e-05
+Number of iterations used:                                                   200
+
+MGWR bandwidths
+--------------------------------------------------------------------------------
+Variable                  Bandwidth      ENP_j   Adj t-val(95%)            DoD_j
+Intercept                   221.000      3.410            2.454            0.789
+lg_agri_predicted           268.000      2.851            2.387            0.820
+lg_agri_predicted_2         322.000      1.433            2.118            0.938
+nonagri_percent             330.000      1.582            2.158            0.921
+emp_nonagri                 330.000      1.462            2.126            0.935
+urban_pop_percent           330.000      1.435            2.119            0.938
+agri_inter                  330.000      1.389            2.106            0.943
+nonagri_inter               136.000      5.188            2.604            0.716
+
+Diagnostic Information
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 291.393
+Effective number of parameters (trace(S)):                                18.750
+Degree of freedom (n - trace(S)):                                        313.250
+Sigma estimate:                                                            0.964
+Log-likelihood:                                                         -449.431
+Degree of Dependency (DoD):                                                0.853
+AIC:                                                                     938.363
+AICc:                                                                    940.996
+BIC:                                                                    1013.516
+R2:                                                                        0.122
+Adj. R2:                                                                   0.070
+
+Summary Statistics For MGWR Parameter Estimates
+--------------------------------------------------------------------------------
+Variable                        Mean        STD        Min     Median        Max
+--------------------      ---------- ---------- ---------- ---------- ----------
+Intercept                     -0.008      0.144     -0.189     -0.064      0.253
+lg_agri_predicted             -0.302      0.043     -0.384     -0.302     -0.213
+lg_agri_predicted_2            0.344      0.015      0.306      0.345      0.390
+nonagri_percent                0.144      0.017      0.075      0.151      0.157
+emp_nonagri                    0.116      0.009      0.080      0.119      0.123
+urban_pop_percent             -0.108      0.007     -0.142     -0.106     -0.099
+agri_inter                     0.107      0.008      0.102      0.104      0.144
+nonagri_inter                  0.113      0.196     -0.161      0.142      0.768
+================================================================================
+Acknowledgement:
+We acknowledge the support of the National Science Foundation under Award 1758786 
+from the Geography and Spatial Sciences Program to A. S. Fotheringham which 
+enabled this software to be written and made freely available.
+================================================================================
+

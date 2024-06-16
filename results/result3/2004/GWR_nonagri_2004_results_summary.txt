@@ -1,0 +1,74 @@
+================================================================================
+MGWR Version: 2.2.1
+Released on: 03/20/2020
+Source code is available at: https://github.com/pysal/mgwr
+Development Team: Ziqi Li, Taylor Oshan, Stewart Fotheringham, Wei Kang, 
+Levi Wolf, Hanchen Yu, Mehak Sachdeva, and Sarah Bardin
+Spatial Analysis Research Center (SPARC)
+Arizona State University, Tempe, USA
+================================================================================
+Model type:                                                             Gaussian
+Number of observations:                                                      332
+Number of covariates:                                                          6
+Dependent variable:                                               giniw_pred_gdp_pc
+Variable standardization:                                                     On
+Total runtime:                                                           0:00:00
+
+Global Regression Results
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 324.623
+Log-likelihood:                                                         -467.358
+AIC:                                                                     946.715
+AICc:                                                                    949.061
+R2:                                                                        0.022
+Adj. R2:                                                                   0.007
+
+Variable                                   Est.         SE  t(Est/SE)    p-value
+------------------------------------ ---------- ---------- ---------- ----------
+Intercept                                -0.000      0.055     -0.000      1.000
+lg_nonagri_predicted                      0.141      0.338      0.418      0.676
+lg_nonagri_predicted_2                   -0.124      0.342     -0.363      0.717
+emp_nonagri                               0.120      0.058      2.076      0.038
+urban_pop_percent                        -0.092      0.063     -1.454      0.146
+nonagri_inter                             0.010      0.056      0.182      0.855
+
+Geographically Weighted Regression (GWR) Results
+--------------------------------------------------------------------------------
+Coordinates type:                                                      Projected
+Spatial kernel:                                                Adaptive bisquare
+Criterion for optimal bandwidth:                                            AICc
+Bandwidth used:                                                          241.000
+
+Diagnostic Information
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 288.885
+Effective number of parameters (trace(S)):                                19.876
+Degree of freedom (n - trace(S)):                                        312.124
+Sigma estimate:                                                            0.962
+Log-likelihood:                                                         -447.996
+Degree of Dependency (DoD):                                                0.794
+AIC:                                                                     937.743
+AICc:                                                                    940.688
+BIC:                                                                    1017.177
+R2:                                                                        0.130
+Adj. R2:                                                                   0.074
+Adj. alpha (95%):                                                          0.015
+Adj. critical t value (95%):                                               2.443
+
+Summary Statistics For GWR Parameter Estimates
+--------------------------------------------------------------------------------
+Variable                        Mean        STD        Min     Median        Max
+--------------------      ---------- ---------- ---------- ---------- ----------
+Intercept                     -0.029      0.174     -0.303     -0.064      0.310
+lg_nonagri_predicted           0.618      0.441     -0.119      0.591      1.465
+lg_nonagri_predicted_2        -0.513      0.367     -1.189     -0.508      0.130
+emp_nonagri                    0.109      0.065     -0.026      0.101      0.207
+urban_pop_percent             -0.036      0.055     -0.175     -0.037      0.096
+nonagri_inter                  0.001      0.092     -0.152      0.021      0.207
+================================================================================
+Acknowledgement:
+We acknowledge the support of the National Science Foundation under Award 1758786 
+from the Geography and Spatial Sciences Program to A. S. Fotheringham which 
+enabled this software to be written and made freely available.
+================================================================================
+

@@ -1,0 +1,84 @@
+================================================================================
+MGWR Version: 2.2.1
+Released on: 03/20/2020
+Source code is available at: https://github.com/pysal/mgwr
+Development Team: Ziqi Li, Taylor Oshan, Stewart Fotheringham, Wei Kang, 
+Levi Wolf, Hanchen Yu, Mehak Sachdeva, and Sarah Bardin
+Spatial Analysis Research Center (SPARC)
+Arizona State University, Tempe, USA
+================================================================================
+Model type:                                                             Gaussian
+Number of observations:                                                      332
+Number of covariates:                                                          6
+Dependent variable:                                               giniw_pred_gdp_pc
+Variable standardization:                                                     On
+Total runtime:                                                           0:00:57
+
+Global Regression Results
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 321.097
+Log-likelihood:                                                         -465.544
+AIC:                                                                     943.089
+AICc:                                                                    945.434
+R2:                                                                        0.033
+Adj. R2:                                                                   0.018
+
+Variable                                   Est.         SE  t(Est/SE)    p-value
+------------------------------------ ---------- ---------- ---------- ----------
+Intercept                                 0.000      0.054      0.000      1.000
+lg_gdppc_predicted                       -2.469      1.322     -1.868      0.062
+lg_gdppc_predicted_2                      2.434      1.323      1.840      0.066
+emp_nonagri                               0.099      0.057      1.729      0.084
+nonagri_inter                            -0.019      0.056     -0.346      0.729
+lg_pop                                    0.089      0.057      1.563      0.118
+
+Multiscale Geographically Weighted Regression (MGWR) Results
+--------------------------------------------------------------------------------
+Coordinates type:                                                      Projected
+Spatial kernel:                                                Adaptive bisquare
+Criterion for optimal bandwidth:                                            AICc
+Score of change (SOC) type:                                          Smoothing f
+Termination criterion for MGWR:                                          1.0e-05
+Number of iterations used:                                                   200
+
+MGWR bandwidths
+--------------------------------------------------------------------------------
+Variable                  Bandwidth      ENP_j   Adj t-val(95%)            DoD_j
+Intercept                   116.000      6.511            2.682            0.677
+lg_gdppc_predicted          330.000      1.119            2.015            0.981
+lg_gdppc_predicted_2        100.000      8.162            2.759            0.638
+emp_nonagri                 330.000      1.538            2.147            0.926
+nonagri_inter               286.000      2.607            2.354            0.835
+lg_pop                       66.000     13.419            2.921            0.553
+
+Diagnostic Information
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 254.180
+Effective number of parameters (trace(S)):                                33.355
+Degree of freedom (n - trace(S)):                                        298.645
+Sigma estimate:                                                            0.923
+Log-likelihood:                                                         -426.750
+Degree of Dependency (DoD):                                                0.704
+AIC:                                                                     922.212
+AICc:                                                                    930.401
+BIC:                                                                    1052.938
+R2:                                                                        0.234
+Adj. R2:                                                                   0.149
+
+Summary Statistics For MGWR Parameter Estimates
+--------------------------------------------------------------------------------
+Variable                        Mean        STD        Min     Median        Max
+--------------------      ---------- ---------- ---------- ---------- ----------
+Intercept                      0.164      0.273     -0.205      0.106      0.672
+lg_gdppc_predicted            -6.499      0.008     -6.521     -6.498     -6.487
+lg_gdppc_predicted_2           6.603      0.195      6.301      6.571      6.994
+emp_nonagri                    0.068      0.015      0.018      0.073      0.085
+nonagri_inter                 -0.032      0.076     -0.170     -0.021      0.117
+lg_pop                         0.076      0.218     -0.295      0.076      0.542
+================================================================================
+Acknowledgement:
+We acknowledge the support of the National Science Foundation under Award 1758786 
+from the Geography and Spatial Sciences Program to A. S. Fotheringham which 
+enabled this software to be written and made freely available.
+================================================================================
+

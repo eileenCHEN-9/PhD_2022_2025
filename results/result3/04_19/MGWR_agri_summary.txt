@@ -1,0 +1,93 @@
+================================================================================
+MGWR Version: 2.2.1
+Released on: 03/20/2020
+Source code is available at: https://github.com/pysal/mgwr
+Development Team: Ziqi Li, Taylor Oshan, Stewart Fotheringham, Wei Kang, 
+Levi Wolf, Hanchen Yu, Mehak Sachdeva, and Sarah Bardin
+Spatial Analysis Research Center (SPARC)
+Arizona State University, Tempe, USA
+================================================================================
+Model type:                                                             Gaussian
+Number of observations:                                                      332
+Number of covariates:                                                          9
+Dependent variable:                                               GINIW_pred_GDP_pc
+Variable standardization:                                                     On
+Total runtime:                                                           0:00:09
+
+Global Regression Results
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 306.655
+Log-likelihood:                                                         -457.905
+AIC:                                                                     933.811
+AICc:                                                                    936.496
+R2:                                                                        0.076
+Adj. R2:                                                                   0.053
+
+Variable                                   Est.         SE  t(Est/SE)    p-value
+------------------------------------ ---------- ---------- ---------- ----------
+Intercept                                 0.000      0.053      0.000      1.000
+lg_agri_predicted                         0.043      0.056      0.763      0.446
+lg_agri_predicted_2                      -0.055      0.059     -0.938      0.348
+agri_gdp_percent                         -0.238      0.065     -3.683      0.000
+emp_agri                                 -0.090      0.060     -1.496      0.135
+agri_inter                                0.085      0.073      1.166      0.244
+nonagri_inter                             0.122      0.073      1.674      0.094
+urban_pop_percent                         0.059      0.056      1.040      0.298
+ln_pop                                    0.007      0.063      0.112      0.911
+
+Multiscale Geographically Weighted Regression (MGWR) Results
+--------------------------------------------------------------------------------
+Coordinates type:                                                      Projected
+Spatial kernel:                                                Adaptive bisquare
+Criterion for optimal bandwidth:                                            AICc
+Score of change (SOC) type:                                          Smoothing f
+Termination criterion for MGWR:                                          1.0e-05
+Number of iterations used:                                                    12
+
+MGWR bandwidths
+--------------------------------------------------------------------------------
+Variable                  Bandwidth      ENP_j   Adj t-val(95%)            DoD_j
+Intercept                   330.000      1.289            2.075            0.956
+lg_agri_predicted           113.000      5.614            2.631            0.703
+lg_agri_predicted_2         284.000      2.558            2.346            0.838
+agri_gdp_percent            330.000      1.396            2.108            0.943
+emp_agri                    330.000      1.365            2.098            0.946
+agri_inter                  326.000      1.771            2.204            0.902
+nonagri_inter               330.000      1.607            2.165            0.918
+urban_pop_percent           183.000      4.817            2.578            0.729
+ln_pop                      231.000      3.476            2.460            0.785
+
+Diagnostic Information
+--------------------------------------------------------------------------------
+Residual sum of squares:                                                 260.636
+Effective number of parameters (trace(S)):                                23.890
+Degree of freedom (n - trace(S)):                                        308.110
+Sigma estimate:                                                            0.920
+Log-likelihood:                                                         -430.914
+Degree of Dependency (DoD):                                                0.832
+AIC:                                                                     911.608
+AICc:                                                                    915.818
+BIC:                                                                    1006.319
+R2:                                                                        0.215
+Adj. R2:                                                                   0.154
+
+Summary Statistics For MGWR Parameter Estimates
+--------------------------------------------------------------------------------
+Variable                        Mean        STD        Min     Median        Max
+--------------------      ---------- ---------- ---------- ---------- ----------
+Intercept                      0.068      0.009      0.051      0.067      0.093
+lg_agri_predicted              0.047      0.244     -0.384      0.111      0.548
+lg_agri_predicted_2           -0.111      0.043     -0.178     -0.120     -0.015
+agri_gdp_percent              -0.310      0.013     -0.340     -0.308     -0.284
+emp_agri                      -0.109      0.003     -0.120     -0.108     -0.102
+agri_inter                     0.112      0.014      0.101      0.108      0.177
+nonagri_inter                  0.159      0.003      0.152      0.159      0.166
+urban_pop_percent              0.057      0.114     -0.199      0.096      0.211
+ln_pop                         0.010      0.146     -0.253      0.053      0.214
+================================================================================
+Acknowledgement:
+We acknowledge the support of the National Science Foundation under Award 1758786 
+from the Geography and Spatial Sciences Program to A. S. Fotheringham which 
+enabled this software to be written and made freely available.
+================================================================================
+
