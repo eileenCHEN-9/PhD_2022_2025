@@ -16,7 +16,7 @@ clear all
 macro drop _all
 capture log close
 set more off
-version 15
+version 18
 
 ** 2. Import city level dataset
 *use "https://raw.githubusercontent.com/eileenCHEN-9/PhD_2022_2025/main/data/Main_Dataset.dta", clear
@@ -65,8 +65,7 @@ predict x_resfe1, e
 twoway (scatter y_resfe1 x_resfe1, mcolor(gs8) msymbol(o) msize(small)) ///
        (qfit y_resfe1 x_resfe1, lcolor(maroon) lwidth(medium)), ///
        title("Residuals Plot: GINI index vs Predicted agriculture GDP (log)") ///
-       ytitle("Residualized GINI index") xtitle("Residualized Predicted agritulture GDP (log)")
-	   xlabel(, grid) ylabel(, grid) legend(off)
+       ytitle("Residualized GINI index") xtitle("Residualized Predicted agritulture GDP (log)") legend(off)
 
 *Non-agri Kuznets
 xtreg GINIW_pred_GDP_pc lg_nonagri_predicted_2 urban_pop_percent i.year,fe robust
@@ -80,7 +79,7 @@ twoway (scatter y_resfe2 x_resfe2, mcolor(gs8) msymbol(o) msize(small)) ///
        (qfit y_resfe2 x_resfe2, lcolor(maroon) lwidth(medium)), ///
        legend(label(1 "Residualized values") label(2 "Quadratic fitted values")) ///
        title("Residuals Plot: GINI index vs Predicted non-agriculture GDP (log)") ///
-       ytitle("Residualized GINI index") xtitle("Residualized Predicted non-agritulture GDP (log)")
+       ytitle("Residualized GINI index") xtitle("Residualized Predicted non-agritulture GDP (log)") legend(off)
 
 * Spatial Kuznets
 spshape2dta "city_edited_thiessen", replace
@@ -116,6 +115,11 @@ twoway scatter GINIW_pred_GDP_pc lg_nonagri_predicted || qfit GINIW_pred_GDP_pc 
     title("Quadratic Fit of GINIW_pred_GDP_pc on lg_nonagri_predicted") ///
     *legend(label(1 "Residualized values") label(2 "Quadratic fitted values")) ///
     ytitle("Residualized GINI index") xtitle("Residualized Predicted non-agritulture GDP (log)")
+
+
+
+
+
 
 
 

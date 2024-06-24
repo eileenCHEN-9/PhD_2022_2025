@@ -114,7 +114,7 @@ twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("L
 
 twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Beijing") name (fig8)
 
-graph combine fig66 fig7 fig8, col(3) ycommon xcommon iscale(0.8)
+graph combine fig7 fig8 fig6, col(3) ycommon xcommon iscale(0.8)
 
 *Shanghai(310000)
 keep if city_id == 310000
@@ -126,7 +126,7 @@ twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("L
 
 twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Shanghai") name(fig11)
 
-graph combine fig99 fig10 fig11, col(3) ycommon xcommon iscale(0.8)
+graph combine fig10 fig11 fig9, col(3) ycommon xcommon iscale(0.8)
 
 *Shenzhen(440300)
 keep if city_id == 440300
@@ -138,7 +138,7 @@ twoway (scatter lg_ind_predicted year) (lfit lg_ind year), legend(off) ytitle("L
 
 twoway (scatter lg_ser_predicted year) (lfit lg_ser year), legend(off) ytitle("Log GDP (services)") xtitle("Year") title("Shenzhen") name(fig15)
 
-graph combine fig13 fig14 fig15, col(3) ycommon xcommon iscale(0.8)
+graph combine fig14 fig15 fig12, col(3) ycommon xcommon iscale(0.8)
 
 **Agriculture
 *Qitaihe(230900)
