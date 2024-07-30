@@ -227,3 +227,25 @@ foreach var of varlist beta_* {
 save "/Users/yilinchen/Documents/PhD/thesis/PhD_2022_2025/data/city_predicted.dta", replace
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+  ****TWFE via xtreg 
+  eststo m01: xtreg city_lggdppc lg_totalmol i.year, fe vce(robust)
+  **** TWFE via FWL
+  eststo m02: twfem reg city_lggdppc lg_totalmol, absorb(city_id year) gen(city_id01 year01) newv(r1_) vce(robust)
+  label variable r1_city_lggdppc   "Residualized Log GDP per capita"
+  label variable r1_lg_totalmol   "Residualized Log mean NTL"
+aaplot r1_city_lggdppc r1_lg_totalmol, aformat(%9.2f) bformat(%9.2f) name(fig1)
+
+
+
